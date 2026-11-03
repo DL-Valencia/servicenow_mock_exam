@@ -1,9 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/api/exams/:id",
+      "destination": "/api/exams?id=:id"
+    },
+    {
+      "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
   ]
 }
-

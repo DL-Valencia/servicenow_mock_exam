@@ -46,6 +46,7 @@ export default function AdminPortalView() {
     adminCredentials,
     updateAdminCredentials,
     registerUploadedExam,
+    syncExamToRepository,
     deleteExamModule,
     downloadExamJson,
     selectExam,
@@ -648,6 +649,15 @@ export default function AdminPortalView() {
                           <span className="mode-badge primary" style={{ marginBottom: 0 }}>
                             {exam.code}
                           </span>
+                          {exam.isBundled || exam.savedToFolder ? (
+                            <span className="mode-badge success" style={{ marginBottom: 0 }}>
+                              🌐 All Devices
+                            </span>
+                          ) : (
+                            <span className="mode-badge warning" style={{ marginBottom: 0 }}>
+                              ⚠️ Browser Only
+                            </span>
+                          )}
                         </div>
                         <div
                           style={{
@@ -675,6 +685,16 @@ export default function AdminPortalView() {
                     </div>
 
                     <div className="admin-module-actions">
+                      {!exam.isBundled && !exam.savedToFolder && (
+                        <button
+                          type="button"
+                          className="btn btn-primary btn-sm"
+                          onClick={() => syncExamToRepository(exam.id)}
+                          title="Push this browser-only exam to GitHub so all devices can search and take it"
+                        >
+                          ☁️ Sync to All Devices
+                        </button>
+                      )}
                       <button
                         type="button"
                         className="btn btn-outline btn-sm"

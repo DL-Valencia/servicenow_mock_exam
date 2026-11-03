@@ -76,7 +76,7 @@ function examStoragePlugin() {
             }
           }
           res.statusCode = 200;
-          res.end(JSON.stringify({ ok: true, exams }));
+          res.end(JSON.stringify({ ok: true, authoritative: true, configured: true, exams }));
           return;
         }
 
@@ -123,9 +123,12 @@ function examStoragePlugin() {
           return;
         }
 
-        // DELETE /api/exams/:id - delete exam JSON file from src/data/exams
+        // DELETE /api/exams/:id or /api/exams?id=... - delete exam JSON file from src/data/exams
         if (req.method === 'DELETE') {
-          const reqId = decodeURIComponent(req.url.replace(/^\//, '').split('?')[0]);
+          const urlParts = req.url.split('?');
+          const pathId = urlParts[0].replace(/^\//, '');
+          const searchParams = new URLSearchParams(urlParts[1] || '');
+          const reqId = decodeURIComponent(searchParams.get('id') || pathId || '');
           const safeId = slugifyId(reqId);
           const filePath = path.join(EXAMS_DIR, `${safeId}.json`);
           if (fs.existsSync(filePath)) {

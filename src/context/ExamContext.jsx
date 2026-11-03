@@ -101,7 +101,7 @@ export function ExamProvider({ children }) {
   const timerRef = useRef(null);
   const toastTimeoutRef = useRef(null);
 
-  // Sync with folder API on mount (so newly saved files in src/data/exams are always fresh)
+  // Sync with folder / GitHub API on mount (so newly saved files in src/data/exams are always fresh across all devices)
   useEffect(() => {
     fetch('/api/exams')
       .then((res) => (res.ok ? res.json() : null))
@@ -120,13 +120,15 @@ export function ExamProvider({ children }) {
               console.error('Error normalizing exam from folder:', e);
             }
           });
-          if (Object.keys(nextMap).length > 0) {
+          if (data.authoritative) {
+            setBundledExams(nextMap);
+          } else if (Object.keys(nextMap).length > 0) {
             setBundledExams((prev) => ({ ...prev, ...nextMap }));
           }
         }
       })
       .catch(() => {
-        // Fallback silently if running in static production hosting without Vite server
+        // Fallback silently if running offline
       });
   }, []);
 
@@ -428,12 +430,60 @@ export function ExamProvider({ children }) {
       }
       showToast(
         savedToFolder
-          ? `✅ "${normalized.code}" (${normalized.questions.length} Qs) saved to src/data/exams/${normalized.id}.json!`
-          : `✅ "${normalized.code}" (${normalized.questions.length} Qs) uploaded and ready!`
+          ? `✅ "${normalized.code}" (${normalized.questions.length} Qs) saved to repository for all devices!`
+          : `⚠️ "${normalized.code}" saved to this browser only (Set GITHUB_TOKEN in Vercel to sync across all devices).`
       );
       return normalized;
     },
     [showToast]
+  );
+
+  // Sync a browser-only custom exam to the repository (/api/exams) so all devices can see it
+  const syncExamToRepository = useCallback(
+    async (examId) => {
+      const target = examsList.find((e) => e.id === examId);
+      if (!target) return false;
+
+      try {
+        const res = await fetch('/api/exams', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(target)
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data?.ok) {
+          setBundledExams((prev) => ({
+            ...prev,
+            [target.id]: {
+              ...target,
+              fileName: data.fileName || `${target.id}.json`,
+              isBundled: true
+            }
+          }));
+          setState((prev) => ({
+            ...prev,
+            customExams: {
+              ...(prev.customExams || {}),
+              [target.id]: {
+                ...target,
+                savedToFolder: true
+              }
+            }
+          }));
+          showToast(`☁️ Synced "${target.code}" to repository! Now visible on all devices.`);
+          return true;
+        } else {
+          showToast(
+            `⚠️ Cloud sync failed: ${data?.error || 'Add GITHUB_TOKEN in Vercel Environment Variables.'}`
+          );
+          return false;
+        }
+      } catch (err) {
+        showToast(`⚠️ Could not reach /api/exams: ${err.message}`);
+        return false;
+      }
+    },
+    [examsList, showToast]
   );
 
   // Delete an exam module
@@ -448,7 +498,7 @@ export function ExamProvider({ children }) {
         desc: `This will remove the ${target.code} exam module (${target.questions.length} questions) from your exam library and delete src/data/exams/${target.id}.json if present.`,
         onConfirm: async () => {
           try {
-            await fetch(`/api/exams/${encodeURIComponent(examId)}`, {
+            await fetch(`/api/exams?id=${encodeURIComponent(examId)}`, {
               method: 'DELETE'
             });
           } catch (e) {
@@ -1329,6 +1379,7 @@ export function ExamProvider({ children }) {
     adminCredentials,
     updateAdminCredentials,
     registerUploadedExam,
+    syncExamToRepository,
     deleteExamModule,
     downloadExamJson,
     uploadModalOpen,
