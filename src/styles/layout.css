@@ -361,3 +361,67 @@
     display: none;
   }
 }
+
+/* EXTRA RESPONSIVE BREAKPOINTS (MOBILE, SMALL PHONES & ULTRA-WIDE) */
+@media (min-width: 1600px) {
+  .workspace-content {
+    max-width: 1400px;
+    padding: 2rem 2.5rem 3rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-sidebar {
+    width: min(85vw, 290px);
+  }
+
+  .top-header {
+    height: 56px;
+    padding: 0 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .header-left {
+    gap: 0.5rem;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .header-breadcrumb {
+    font-size: 0.82rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .header-actions {
+    gap: 0.35rem;
+    flex-shrink: 0;
+  }
+
+  .icon-btn,
+  .header-action-btn {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .workspace-content {
+    padding: 1rem 0.75rem 1.75rem;
+  }
+
+  .app-footer {
+    padding: 0.9rem 0.85rem;
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .header-breadcrumb span.muted {
+    display: none;
+  }
+  .workspace-content {
+    padding: 0.85rem 0.6rem 1.5rem;
+  }
+}
