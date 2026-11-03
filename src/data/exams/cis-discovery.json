@@ -1,0 +1,4264 @@
+{
+  "id": "cis-discovery",
+  "code": "CIS-DISCOVERY",
+  "title": "CIS-DISCOVERY: Certified Implementation Specialist - Discovery",
+  "category": "ServiceNow Mainline",
+  "description": "Practice 122 verified questions across all topics in CIS-DISCOVERY: Certified Implementation Specialist - Discovery.",
+  "createdAt": "2026-11-03T16:38:18.571Z",
+  "updatedAt": "2026-11-03T16:38:20.687Z",
+  "questions": [
+    {
+      "id": 1,
+      "question": "A discovery is run against a Windows Server for the first time and returns these attribute values: `name = WindowsSN1`, `serial_number = 12321`.\n\nA later discovery is run against a different Windows Server and returns these attribute values: `name = WindowsSN2`, `serial_number = 12321`.\n\nWith only base system CI Identifiers configured, which of the following is true?",
+      "options": [
+        {
+          "label": "A",
+          "text": "A Windows Server CI is created, then updated with WindowsSN2 as the name.",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Two Windows Sewer CIs are created, with WindowsSN1 AND WindowsSN2 for names.",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Two Windows Server CIs are created, without serial_number values.",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "A Windows Server CI is created, then updated with WindowsSN1 as the name.",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The predefined Server identification rule evaluates the serial-number identifier before the name identifier. A matching serial number identifies the existing CI, so the later discovery updates that CI with the newly discovered name, `WindowsSN2`, rather than creating another CI.\n\n**Learn more:** [ServiceNow Server cmdb_ci_server class](https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/class-server.html) · [ServiceNow Identification rules](https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/c_IdentificationRules.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 2,
+      "question": "When installing a MID Server on a Windows platform, which right must be assigned when creating a Service Account?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Root",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Domain Admin",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "MID Server User Role",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Log on as service",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "A Windows service account must be granted the **Log on as a service** user right so it can run the MID Server service. ServiceNow documentation specifies this right for MID Server service accounts and advises that the account should not be an administrator-level account.\n\n**Learn more:** [Install a MID Server on Windows](https://www.servicenow.com/docs/r/servicenow-platform/mid-server/mid-server-install-prereqs.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 3,
+      "question": "A network device has both an SSH port and an SNMP port open. Discovery attempts the SSH probe first, and it fails. This triggers the SNMP probe, which succeeds. For later discoveries of that device, Discovery uses SNMP first.\n\nWhich Discovery functionality enables this behavior?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Classification",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Credential affinity",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "MID Server affinity",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "IP service affinity",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "IP service affinity saves the IP service that successfully discovers a device and associates it with that device’s IP address. Subsequent Discovery runs target the IP address with the successful protocol first; therefore, a successful SNMP probe is prioritized after the SSH probe fails.\n\n**Learn more:** [Check IP service affinity for Discovery and Orchestration](https://www.servicenow.com/docs/r/it-operations-management/discovery/t_CheckIPServiceAffinity.html) · [Discovery properties](https://www.servicenow.com/docs/r/it-operations-management/discovery/r_DiscoveryProperties.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 4,
+      "question": "File-based Discovery is initiated during the __________.",
+      "options": [
+        {
+          "label": "A",
+          "text": "Classify Phase",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Scan Phase",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Exploration Phase",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Pattern Phase",
+          "isCorrect": false
+        },
+        {
+          "label": "E",
+          "text": "Identification Phase",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "ServiceNow File-based Discovery runs in the exploration phase of normal Discovery, where probes scan configured paths for file names or extensions and return file information for software matching.\n\n**Learn more:** [ServiceNow: File-based Discovery](https://www.servicenow.com/docs/r/it-operations-management/discovery/file-based-discovery.html?contentId=u3OZf7D0spiMkP8GowGcsA)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Engagement Readiness"
+      ]
+    },
+    {
+      "id": 5,
+      "question": "What is File-Based Discovery used for?",
+      "options": [
+        {
+          "label": "A",
+          "text": "To discover the checksum of a file and store it to track for changes",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "To discover the contents of flat files such as configuration files",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "To discover that file names conform to a defined naming standard",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "To discover file paths to recognize the signature of installed software",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "ServiceNow File-based Discovery scans configured paths for known file signatures and matches discovered files to installed software using file information such as name, size, and version. This improves identification of installed and unregistered software.\n\n**Learn more:** [ServiceNow: File-based Discovery](https://www.servicenow.com/docs/r/yokohama/it-operations-management/discovery/file-based-discovery.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 6,
+      "question": "In Discovery, which table associates an IP address with a credential?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Credential Affinity",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Service Affinity",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Service CI Association",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Tags",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The Credential Affinity table links an IP address to a credential, allowing Discovery to use the designated credential for that target.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 7,
+      "question": "In general, which of the following types of application relationships can Discovery provide? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "tcp to udp",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "application to application",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "mid server to target",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "host to application",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "ServiceNow Discovery can identify dependencies between applications and associate applications with their hosting infrastructure. These correspond to application-to-application and host-to-application relationships.",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 8,
+      "question": "Which option most accurately describes a Functionality Definition?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Defines what CI identifiers to use.",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Defines the IP addresses to discover.",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Defines what Behavior to use from a Discovery Schedule.",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Defines what protocols to detect from within a Behavior.",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "A Functionality Definition specifies the protocol or set of protocols that each MID Server scans within a Discovery Behavior, such as WMI, SNMP, or SSH. [ServiceNow: Create a Discovery behavior](https://www.servicenow.com/docs/r/it-operations-management/discovery/create-disco-behavior.html)\n\n**Learn more:** [ServiceNow — Create a Discovery behavior](https://www.servicenow.com/docs/r/it-operations-management/discovery/create-disco-behavior.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 9,
+      "question": "From the image, which of the following statements is true?\n\n![Question Image](https://cdn.examcademy.com/images/questions/1784724116418-9622otqr.png)",
+      "options": [
+        {
+          "label": "A",
+          "text": "This is from a WMI query operation step.",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "There is a scalar variable labeled ‘1’.",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "This Value cannot be used in a pattern step.",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "There is a tabular variable named ‘name_details’.",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "`$name_details[1].exec_info` accesses the `exec_info` value in an indexed row of the tabular variable `name_details`. The `[1]` portion is a row index rather than a scalar variable.\n\n**Learn more:** [ServiceNow Community: Discovery pattern variable syntax discussion](https://www.servicenow.com/community/itom-forum/which-of-the-following-statements-are-true-for-the-below-value/m-p/953132)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 10,
+      "question": "Which option best represents where to modify the functionality shown here?\n\n![Question Image](https://cdn.examcademy.com/images/questions/1784724117078-5hs0aw63.png)",
+      "options": [
+        {
+          "label": "A",
+          "text": "From a Classifier",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "From a Discovery Pattern",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "From the MID Server",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "From a Probe",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Tracked configuration-file definitions, including the CI type and file path, are configured on a ServiceNow Discovery pattern through its **Tracked Files** tab. A classifier triggers the pattern, while MID Servers execute discovery; traditional probes and sensors do not support configuration-file tracking. [Modify tracking changes in configuration files](https://www.servicenow.com/docs/r/it-operations-management/discovery/track-configuration-files.html)\n\n**Learn more:** [ServiceNow: Modify tracking changes in configuration files](https://www.servicenow.com/docs/r/it-operations-management/discovery/track-configuration-files.html) · [ServiceNow: Configuration file tracking](https://www.servicenow.com/docs/en-US/bundle/zurich-it-operations-management/page/product/discovery/concept/tracked-config-files.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 11,
+      "question": "Which method does Discovery use to determine whether a Host IP is active or alive?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Port Scan",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Traceroute",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Ping",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Classification",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Discovery uses port scanning through the Shazzam probe to establish whether a host IP is alive. Responses to scanned ports indicate that the target is reachable; classification uses the resulting information to identify the device afterward.\n\n**Learn more:** [Credential-less host Discovery](https://www.servicenow.com/docs/en-US/bundle/zurich-it-operations-management/page/product/discovery/reference/credential-less-host-discovery.html) · [Discovery classifiers](https://www.servicenow.com/docs/r/it-operations-management/discovery/discovery-classifiers.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Engagement Readiness"
+      ]
+    },
+    {
+      "id": 12,
+      "question": "Which of the following choices are required for Quick Discovery? *(select 2)*",
+      "options": [
+        {
+          "label": "A",
+          "text": "MID Server",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Discovery Schedule",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "PID",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Target IP",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Quick Discovery requires selecting a MID Server and supplying the target IP address for the device to be discovered. A Discovery Schedule is not required because Quick Discovery is an on-demand scan, and a PID is unrelated.",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Engagement Readiness"
+      ]
+    },
+    {
+      "id": 13,
+      "question": "To use **Debug** from the Pattern Designer, what must you have?",
+      "options": [
+        {
+          "label": "A",
+          "text": "a proxy server",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "a discoverable CI",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "the admin role",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Service Mapping installed",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "The Pattern Designer Debug capability requires Service Mapping to be installed; it supplies the Service Mapping pattern-debugging functionality. A proxy server and a discoverable CI may be relevant to particular discovery targets, but neither is the product prerequisite, and the required access is not simply the generic admin role.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 14,
+      "question": "Which option identifies the three best methods for extending Discovery?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Orchestration, Classifiers, Discovery Patterns",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Fingerprinting, Classifiers, Discovery Patterns",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Orchestration, Classifiers, Probes & Sensors",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Classifiers, Probes & Sensors, Discovery Patterns",
+          "isCorrect": true
+        },
+        {
+          "label": "E",
+          "text": "Classifiers, Fingerprinting, Probes & Sensors",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Discovery can be extended through classifiers that control identification and exploration triggers, custom probes and sensors that collect and process additional CI data, and Discovery patterns that customize identification and exploration behavior. [Discovery classifiers](https://www.servicenow.com/docs/r/it-operations-management/discovery/discovery-classifiers.html), [Discovery probes and sensors](https://www.servicenow.com/docs/r/it-operations-management/discovery/c_DiscoveryProbesAndSensors.html)\n\n**Learn more:** [ServiceNow Discovery classifiers](https://www.servicenow.com/docs/r/it-operations-management/discovery/discovery-classifiers.html) · [ServiceNow Discovery probes and sensors](https://www.servicenow.com/docs/r/it-operations-management/discovery/c_DiscoveryProbesAndSensors.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 15,
+      "question": "Which role must the MID Server user account have to interact with a ServiceNow instance?",
+      "options": [
+        {
+          "label": "A",
+          "text": "mid_server",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "discovery_admin",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "sm_mid",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "mid_discovery",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The `mid_server` role authorizes a MID Server user account to communicate with the ServiceNow instance and access the protected tables required for normal MID Server operations.\n\n**Learn more:** [Create the MID Server user and grant the role](https://www.servicenow.com/docs/r/servicenow-platform/mid-server/t_SetupMIDServerRole.html) · [System roles](https://www.servicenow.com/docs/r/platform-administration/user-administration/base-system-roles.html?contentId=w6cANEQrbOf0hJZugq2tog)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 16,
+      "question": "SNMP credentials require which of the following?",
+      "options": [
+        {
+          "label": "A",
+          "text": "write community strings",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "usernames",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "read community strings",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "port 135 access",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "SNMP monitoring using community-string authentication requires a read community string to retrieve management information from a device. A write community string is needed only for modifying device settings.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 17,
+      "question": "![Question Image](https://cdn.examcademy.com/images/questions/1784728678232-cc30h4x7.png)\n\nBased on the image, which of the following statements are true? (select 3)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Attributes from two tables populate a table with the same name as a ServiceNow CMDB table.",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "This operation is more than likely a part of a step on a pattern set to Application Pattern Type.",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "If a value is unmatched, it is still merged into the Target Table.",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "For this operation to run, there must be some data in the process.executablePath variable.",
+          "isCorrect": true
+        },
+        {
+          "label": "E",
+          "text": "This is a horizontal pattern of type \"infrastructure.\"",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The operation merges attributes from the two specified source tables into the CMDB target table `cmdb_ci_web_server`. It applies only when `$process.executablePath` contains `\"mongoose\"`; therefore, a qualifying value is required. The process-specific application criterion makes this characteristic of an Application pattern. Unmatched values are configured to be removed, not merged. ServiceNow distinguishes Application patterns, which discover applications, from Infrastructure patterns used for horizontal host discovery.\n\n**Learn more:** [Create or customize patterns](https://www.servicenow.com/docs/r/it-operations-management/discovery-and-service-mapping-patterns/t_CreatePatternPatDef.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 18,
+      "question": "When designing steps with operations that require variables, what is the best practice?",
+      "options": [
+        {
+          "label": "A",
+          "text": "hard core variables",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "always use scalar variables",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "query targets for variables",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "design for a static environment",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Querying target systems for variable values lets Discovery patterns adapt to the target’s current configuration. This avoids brittle hard-coded values and supports dynamic environments.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 19,
+      "question": "Which pattern operation enables transferring a file from the MID Server to a target?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Parse file",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Create Connection",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Put file",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Manage Attachments",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The **Put file** operation delivers a file from a MID Server to the target device. ServiceNow documentation describes Put File commands as enabling file delivery to target devices.\n\n**Learn more:** [Configure MID Server for AWS S3 access](https://www.servicenow.com/docs/r/it-operations-management/discovery/configure-mid-server-aws-s3-access.html?contentId=hIPrGBaoaNj2mYW_2F7wLw)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 20,
+      "question": "For the Parse Variable pattern operation, what is needed to use two different parsing methods to populate variables?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Two different Debug Mode sessions.",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "A tabular and a scalar variable.",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Two different steps.",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Two different Define Parsing selections on the same step.",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A ServiceNow Discovery pattern step that uses the Parse Variable operation has a single Define Parsing selection. Two different parsing methods must therefore be configured in two separate steps.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 21,
+      "question": "Which of the following options describe differences between Service Mapping and Discovery? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Discovery requires agent installation to find hardware devices, Service Mapping requires agents for software.",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Discovery finds applications and devices on your network, Service Mapping monitors those devices.",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Discovery utilizes IP address ranges for initial discovery, Service Mapping uses entry points.",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Discovery addresses inventory-related use-cases, while Service Mapping allows for the creation of accurate maps of application service topologies.",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Discovery uses configured IP address ranges or networks for horizontal infrastructure discovery and inventory-related CMDB use cases. Service Mapping starts from defined application-service entry points and performs top-down discovery to create accurate maps of application-service components and their dependencies.\n\n**Learn more:** [Discovery IP address configuration](https://www.servicenow.com/docs/r/it-operations-management/discovery/discovery-ip-address-configuration.html) · [Pattern-based discovery in Service Mapping](https://www.servicenow.com/docs/r/zurich/it-operations-management/service-mapping/pattern-based-discovery.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Engagement Readiness"
+      ]
+    },
+    {
+      "id": 22,
+      "question": "Which of the following are provided by the ECC Queue? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Login credentials for the MID Server host.",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "The actual XML payload that is sent to or from an instance.",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "A connected flow of probe and sensor activity.",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "The process responsible for defining, analyzing, planning, measuring, and improving all aspects of the availability of IT services.",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "ECC Queue records contain the XML message payload exchanged with the instance and provide a connected flow of Discovery probe and sensor activity. [ServiceNow: ECC queue for Discovery](https://www.servicenow.com/docs/r/it-operations-management/discovery/r_DiscoveryStatusECCQueue.html)\n\n**Learn more:** [ServiceNow: ECC queue for Discovery](https://www.servicenow.com/docs/r/it-operations-management/discovery/r_DiscoveryStatusECCQueue.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 23,
+      "question": "Which of the following options are used exclusively for the Application Pattern Type? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Run Order",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Identification Section",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "CI Type",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Operating System",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "In ServiceNow Discovery Pattern Designer, the **Operating system** and **Run Order** fields are designated for application patterns only. CI type is a basic attribute for both application and infrastructure patterns, while identification sections are not exclusive to application patterns.\n\n**Learn more:** [ServiceNow: Create or customize patterns](https://www.servicenow.com/docs/r/it-operations-management/discovery-and-service-mapping-patterns/t_CreatePatternPatDef.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 24,
+      "question": "Which option best explains how to use a Behavior for Discovery?",
+      "options": [
+        {
+          "label": "A",
+          "text": "The MID Server selection method on a Discovery Schedule.",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "The Behavior drop-down menu on a Discovery IP Range.",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "The Behavior drop-down menu on a Discovery Status.",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "The Behavior checkbox on a CI.",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A Discovery Behavior specifies the probes launched by Shazzam and the MID Servers that launch them. It can be selected from the **Behavior** drop-down on an individual Discovery IP Range to override the discovery behavior for that range.\n\n**Learn more:** [ServiceNow: Discovery behaviors](https://www.servicenow.com/docs/r/it-operations-management/discovery/c_DiscoveryBehaviors.html) · [ServiceNow: Discovery IP address configuration](https://www.servicenow.com/docs/r/it-operations-management/discovery/discovery-ip-address-configuration.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 25,
+      "question": "Which operation is used to switch from the default credentials to any other suitable credentials in a horizontal pattern?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Change credentials",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Change user",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Alternate credentials",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Alternate user",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The Change user operation in a ServiceNow Discovery horizontal pattern switches the credentials used by the pattern from the default credentials to another appropriate credential set.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 26,
+      "question": "When does the Extension section of a horizontal pattern run?",
+      "options": [
+        {
+          "label": "A",
+          "text": "As part of the post sensor processing script",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "After the Identification sections",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "As part of the port scan",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Before the Identification sections",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The MID Server executes extension sections after the identification sections, provided that at least one identification section completes successfully.\n\n**Learn more:** [Enhance patterns without modifying identification sections](https://www.servicenow.com/docs/r/it-operations-management/discovery-and-service-mapping-patterns/modify-pattern-using-extensions.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 27,
+      "question": "Which of the following pattern operations query targets? *(select 2)*",
+      "options": [
+        {
+          "label": "A",
+          "text": "WMI Query",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Merge Table",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Get Process",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Parse Variable",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "WMI Query retrieves management data from a target through Windows Management Instrumentation, and Get Process retrieves process information from a target. Merge Table and Parse Variable are data-processing operations rather than target-query operations.",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 28,
+      "question": "Which option best describes what occurs by default when duplicate CIs are detected during identification and reconciliation?",
+      "options": [
+        {
+          "label": "A",
+          "text": "A notification is sent to the CI owner.",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "An associated identification rule is created automatically.",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Each set of duplicate CIs is added to a de-duplication task.",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "The next discovery is stopped for the CI that is duplicated.",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "When the Identification and Reconciliation Engine detects duplicate CIs, it groups each duplicate-CI set into a de-duplication task for review and remediation. [ServiceNow: Detecting duplicate CIs](https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/id-detect-dup-ci.html?contentId=hFfrI_zlUnGeFaHBYwICEg)\n\n**Learn more:** [ServiceNow: Detecting duplicate CIs](https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/id-detect-dup-ci.html?contentId=hFfrI_zlUnGeFaHBYwICEg)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 29,
+      "question": "Which of the following must a MID Server be able to access in order to remain automatically up to date with instance versions?",
+      "options": [
+        {
+          "label": "A",
+          "text": "install.service-now.com",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "docs.servicenow.com",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "developer.service-now.com",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "service-now.com",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A MID Server automatically downloads the upgrade package from the ServiceNow download site. Its host must therefore have network access to `install.service-now.com` for automatic upgrades to occur.\n\n**Learn more:** [MID Server upgrades](https://www.servicenow.com/docs/r/servicenow-platform/mid-server/c_UpgradeAndTestMIDServer.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 30,
+      "question": "As the initial step of horizontal discovery, where is the Shazzam probe placed in a request?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Target",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Pattern Log",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "ECC queue",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Discovery Log",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A Shazzam probe is submitted to a MID Server through an output record in the External Communication Channel (ECC) Queue. The MID Server retrieves the queued request and performs the probe; discovery and pattern logs record activity rather than hold the outbound probe request.\n\n**Learn more:** [ServiceNow Developers: Checking the ECC Queue](https://developer.servicenow.com/print_page.do?category=now-platform&identifier=business_rules_technical_best_practices&module=guide&release=zurich)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 31,
+      "question": "Which of the following choices are types of variables used in discovery patterns? (select 3)",
+      "options": [
+        {
+          "label": "A",
+          "text": "CI attributes",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Prefix",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Temporary",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Fixed",
+          "isCorrect": false
+        },
+        {
+          "label": "E",
+          "text": "Global",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Discovery patterns use CI attributes to represent fields on the selected CI type, temporary variables to retain values while the pattern runs, and global variables that are available across the pattern context. Prefix and Fixed are not Discovery pattern variable categories.\n\n**Learn more:** [Create New or Modify Patterns](https://www.servicenow.com/community/itom-articles/create-new-or-modify-patterns/ta-p/2295761)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 32,
+      "question": "One way to delete specific CIs that have not been discovered in 30 days is:",
+      "options": [
+        {
+          "label": "A",
+          "text": "Scheduled Job",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "UI Policy",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Service Mapping",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Data Policy",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A Scheduled Job can execute recurring work at a defined interval, including querying configuration items whose last discovery date is older than 30 days and deleting the matching records. UI Policies and Data Policies govern form or data behavior, while Service Mapping discovers service relationships rather than performing scheduled CI cleanup.\n\n**Learn more:** [ServiceNow Scheduled jobs](https://www.servicenow.com/docs/r/platform-administration/time-configuration/c_ScheduledJobs.html) · [ServiceNow Deleting records safely](https://www.servicenow.com/docs/r/platform-administration/deleting-records-safely.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 33,
+      "question": "Which of the following record types does the CMDB contain? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Model",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Configuration Item (CI)",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Asset",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Relation Type",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "The CMDB’s major record types are Configuration Items (CIs), which represent managed computers, devices, or services, and Relation Types, which define relationships between CIs or between a CI and a user or group.\n\n**Learn more:** [ServiceNow: CMDB record types](https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/r_CMDBRecordTypes.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Configuration Management Database"
+      ]
+    },
+    {
+      "id": 34,
+      "question": "For CMDB Health, which of the following can relationships be? (select 3)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Duplicate",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Stale",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Orphan",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Required",
+          "isCorrect": false
+        },
+        {
+          "label": "E",
+          "text": "Recommended",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "CMDB Health evaluates relationship health for duplicate, orphan, and stale relationships. “Required” and “recommended” instead describe CI-field completeness metrics, not relationship-health types.\n\n**Learn more:** [ServiceNow: View relationships health](https://www.servicenow.com/docs/r/yokohama/servicenow-platform/configuration-management-database-cmdb/t_ViewRelationshipsHealth.html?contentId=u0XlvYkUhk_7Lgg_XH4Zlg)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Configuration Management Database"
+      ]
+    },
+    {
+      "id": 35,
+      "question": "Which choice displays active Discovery errors, including a help link for every error?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Discovery Dashboard",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "IP Address Failure Report",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Discovery Schedule",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "MID Server Dashboard",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The Discovery Dashboard includes the Active Discovery Errors report, which lists errors from each active Discovery and provides a Help link to suggested remediation for each error. [ServiceNow Discovery Dashboard](https://www.servicenow.com/docs/r/de-DE/it-operations-management/discovery/c_DiscoveryDashboard.html?contentId=M1aSsxFl4~zDZrn~PyYrGw)\n\n**Learn more:** [ServiceNow Discovery Dashboard](https://www.servicenow.com/docs/r/de-DE/it-operations-management/discovery/c_DiscoveryDashboard.html?contentId=M1aSsxFl4~zDZrn~PyYrGw)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Engagement Readiness"
+      ]
+    },
+    {
+      "id": 36,
+      "question": "Which of the following choices are horizontal pattern types? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Hardware",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Software",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Infrastructure",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Application",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "ServiceNow Discovery uses two pattern types: infrastructure patterns, which create inventories of devices, and application patterns, which identify and inventory applications. Both are used in horizontal discovery.\n\n**Learn more:** [Discovery patterns used by ITOM Visibility](https://www.servicenow.com/docs/r/it-operations-management/discovery-and-service-mapping-patterns/c_MappingPatternsCustomization.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 37,
+      "question": "Which option enables the following functionality?\n\nIf this value is set to 1000 and a discovery needs to scan 10,000 IP addresses using one MID Server, it creates 10 Shazzam probes, with each probe scanning 1000 IP addresses.",
+      "options": [
+        {
+          "label": "A",
+          "text": "MID Server Clusters",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "MID Server selection method",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Shazzam Batch Size",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Behaviors",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Shazzam batch size sets the number of IP addresses that each Shazzam probe can scan. A value of 1000 therefore splits a 10,000-IP discovery performed by one MID Server into 10 probes of 1000 IP addresses each.\n\n**Learn more:** [ServiceNow Discovery Schedule form reference](https://www.servicenow.com/docs/r/it-operations-management/discovery/discovery-schedule-form.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 38,
+      "question": "For the Set Parameter Value operation, which of the following is used in the syntax to declare a constant, unchanging value?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Hash tag",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Brackets",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Quotes",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Dollar sign",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "In ServiceNow Discovery pattern syntax, quotation marks enclose a literal string value, making it a fixed constant rather than a variable reference or expression. ServiceNow’s Discovery-pattern example sets a parameter to the literal value `\"Final Step\"`.\n\n**Learn more:** [Create a new Discovery pattern](https://www.servicenow.com/community/itom-articles/create-a-new-discovery-pattern/ta-p/2320789)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 39,
+      "question": "What is the default number of threads for a MID Server?",
+      "options": [
+        {
+          "label": "A",
+          "text": "5",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "1",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "50",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "25",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "A MID Server uses a default thread pool of 25 threads to process work.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 40,
+      "question": "Which of the following is **not** used in a horizontal discovery pattern?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Variables",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Connectivity section",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Operations",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Identification section",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Horizontal discovery patterns use identification sections, operations, and variables to identify and explore configuration items. Connectivity sections are for discovering outbound connections in Service Mapping’s top-down pattern-based discovery, rather than horizontal discovery.\n\n**Learn more:** [Patterns and horizontal discovery](https://www.servicenow.com/docs/r/it-operations-management/discovery/c-UsingPatternsForHorizontalDiscovery.html) · [Pattern-based discovery in Service Mapping](https://www.servicenow.com/docs/r/zurich/it-operations-management/service-mapping/pattern-based-discovery.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 41,
+      "question": "Under which of the following can CI identifiers be viewed?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Discovery Dashboard",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "CI Class Manager",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Process Handlers",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Processes and Classification",
+          "isCorrect": false
+        },
+        {
+          "label": "E",
+          "text": "CI record",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "CI identifier rules are associated with a specific CI type or class and define the attributes used to identify CIs. The CI Class Manager exposes the identification rules and their identifier entries for the selected CI class; an individual CI record is an instance record, not the class-level identifier-rule configuration.\n\n**Learn more:** [Discovery identifiers](https://www.servicenow.com/docs/r/it-operations-management/discovery/c_DiscoveryIdentifiers.html?contentId=hNYpwqJKmGsA99EqEWKhSA)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Configuration Management Database"
+      ]
+    },
+    {
+      "id": 42,
+      "question": "Which of the following options can serve as global variables for steps in horizontal discovery patterns? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "system",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "computer_system",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "process",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "baseline",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "In ServiceNow horizontal Discovery patterns, `computer_system` and `process` are predefined global variables available to steps. They provide the computer-system context and discovered process information used by pattern operations.",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 43,
+      "question": "Which of the following runs the osquery commands on agents to collect attribute details from a CI?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Agent Collector",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Agent listener",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "ACC for Discovery",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Check Definitions",
+          "isCorrect": false
+        },
+        {
+          "label": "E",
+          "text": "Policies",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Agent Collector executes osquery commands on managed agents to collect configuration-item attribute data. Agent Client Collector Discovery is the broader discovery capability; policies and check definitions configure or assign collection behavior, while the listener handles agent communication.\n\n**Learn more:** [ServiceNow ACC Discovery documentation](https://www.servicenow.com/docs/r/it-operations-management/agent-client-collector/acc-discovery.html?contentId=uT69Itr2lJ9p4MC8YumiOw)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 44,
+      "question": "What information appears in the Discovery pattern log but does not appear in the ECC Queue?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Success or failure of the individual pattern steps",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Payload of CI attributes and relationships",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Shazzam probe payload",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Relationships created",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The pattern-based Horizontal Discovery Log records the results of the operations defined in a pattern, including the outcome of each individual operation. The ECC Queue records communications and XML payloads exchanged between the instance and MID Server, including probe activity and returned data, rather than the detailed execution result of every pattern operation.\n\n**Learn more:** [Discovery log details](https://www.servicenow.com/docs/r/it-operations-management/discovery/discovery-log.html) · [ECC queue for Discovery](https://www.servicenow.com/docs/r/it-operations-management/discovery/r_DiscoveryStatusECCQueue.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 45,
+      "question": "After opening an Automaton Error Messages list from **Discovery &gt; Home**, how are the options in the right navigation pane categorized? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "SELECT ALL",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "SELECT ONE",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "ACTION ON SELECTED",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "ACTION ON ALL",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "ServiceNow related-list navigation panes organize their available operations into two standard sections: one grouping actions that apply only to the rows a user has explicitly selected, and one grouping actions that apply to every row in the list regardless of selection; the Automation Error Messages list under Discovery > Home follows this same standard ServiceNow list UI convention, presenting its options divided between actions that act on selected rows and actions that act on all rows.",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 46,
+      "question": "A Discovery Schedule includes a /24 subnet IP Range and a Shazzam batch size of 5000.\n\nHow many times is a Shazzam probe launched during discovery?",
+      "options": [
+        {
+          "label": "A",
+          "text": "1",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "2",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "5000",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "254",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A /24 subnet provides 254 usable host IP addresses, and each Shazzam probe can scan up to 5,000 IP addresses at the configured batch size. The entire range therefore fits in one probe batch.\n\n**Learn more:** [Discovery Schedule form reference](https://www.servicenow.com/docs/r/it-operations-management/discovery/discovery-schedule-form.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 47,
+      "question": "Which option best describes what might also be necessary when increasing the maximum number of threads for a MID Server?",
+      "options": [
+        {
+          "label": "A",
+          "text": "updating the acl rules for the CMDB tables in ServiceNow",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "increase the amount of disk space on the MID Server host",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "increasing the memory allocated to the MID Server app.",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "increase the MID Server max payload size",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Each MID Server thread consumes memory. Increasing the thread count may therefore require increasing the JVM memory allocated to the MID Server application; otherwise, the MID Server can encounter an out-of-memory error.\n\n**Learn more:** [ServiceNow: Set MID Server thread use](https://www.servicenow.com/docs/r/servicenow-platform/mid-server/t_SetMIDServerThreadUse.html?contentId=4BPx0IGbSyA65YMB4Jiqrw)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 48,
+      "question": "Hardware Models may have a one-to-many relationship with the following:\n\n(select 3)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Assets",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Manufacturer",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Configuration Items",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Product owner",
+          "isCorrect": false
+        },
+        {
+          "label": "E",
+          "text": "Model Categories",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "A hardware model can be associated with multiple assets and configuration items that represent instances of that model. It can also be associated with multiple model categories; ServiceNow documents the **Model categories** field as the categories with which a model can be associated, and those categories are used to create CIs and assets.\n\n**Learn more:** [ServiceNow: Hardware model details](https://www.servicenow.com/docs/r/it-asset-management/hardware-asset-management/hardware-model-fields.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Configuration Management Database"
+      ]
+    },
+    {
+      "id": 49,
+      "question": "What is the recommended approach for consolidating duplicate CIs?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Duplicate CI Remediator",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Event CI Remediation",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Ignore Duplicate CI",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Manual CI Remediation",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "ServiceNow’s Duplicate CI Remediator is the guided CMDB reconciliation tool for consolidating duplicate configuration items into a retained main CI while reconciling attributes, relationships, and related items.\n\n**Learn more:** [ServiceNow: Duplicate CIs remediation](https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/de-duplication-tasks.html) · [ServiceNow: Remediate a de-duplication task (manual)](https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/reconcile-dup-task.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Configuration Management Database"
+      ]
+    },
+    {
+      "id": 50,
+      "question": "Which of the following fields can be edited from a **Merge Table** pattern operation? (select 3)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Target Table",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Second Table",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Primary Table",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "First Table",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "A Merge Table pattern operation combines data from the configured First Table and Second Table into the configured Target Table. Those three table fields are editable; Primary Table is not a Merge Table operation field.",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 51,
+      "question": "Which option best characterizes a tabular variable in a discovery pattern?",
+      "options": [
+        {
+          "label": "A",
+          "text": "A single column",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "A single string",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Each cell is a CI attribute",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Each cell is a scalar variable",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "A tabular variable stores data in rows and columns; each individual cell holds a scalar value. The table itself can therefore contain multiple values, unlike a single-column or single-string variable.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 52,
+      "question": "When configuring the MID Server Service Settings, which of the following is an invalid MID Server name?",
+      "options": [
+        {
+          "label": "A",
+          "text": "my_mid_server1",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "mid_server1",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "mid.server1",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "midserver1",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "MID Server names cannot begin with `mid.server`; therefore, `mid.server1` is not valid.\n\n**Learn more:** [Install a MID Server on Windows](https://www.servicenow.com/docs/r/servicenow-platform/mid-server/mid-server-install-prereqs.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 53,
+      "question": "Which of the choices are types of temporary variables in a discovery pattern? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "SQL statement",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Tabular/Table",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Command",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Scalar/List",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Discovery patterns use temporary variables to hold values while a pattern runs. The supported temporary-variable categories are tabular/table variables for structured rows of data and scalar/list variables for individual values or collections. SQL statements and commands are operations, not variable types.\n\n**Learn more:** [Create or customize patterns](https://www.servicenow.com/docs/r/washingtondc/it-operations-management/discovery-and-service-mapping-patterns/t_CreatePatternPatDef.html) · [Patterns and horizontal discovery](https://www.servicenow.com/docs/r/it-operations-management/discovery/c-UsingPatternsForHorizontalDiscovery.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 54,
+      "question": "Which option describes the recommended permission level for credentials used to discover Windows Servers?",
+      "options": [
+        {
+          "label": "A",
+          "text": "A standard domain user with read access",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "A domain user with local administrator access",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "A user with root access across the domain",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "A domain administrator with sudo access",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Windows Discovery credentials should use a domain user account with local administrator access on the target Windows hosts. This grants the permissions needed for discovery while avoiding unnecessary domain-wide administrator privileges.\n\n**Learn more:** [ServiceNow — Windows credentials](https://www.servicenow.com/docs/r/xanadu/platform-security/connections-and-credentials/r_WindowsCredentialsForm.html) · [ServiceNow — Windows discovery](https://www.servicenow.com/docs/en-US/bundle/zurich-it-operations-management/page/product/discovery/reference/r_DataCollDiscoWindowsComputers.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 55,
+      "question": "Which operation is depicted in this image?\n\n![Question Image](https://cdn.examcademy.com/images/questions/1784740088699-nrmjrr53.png)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Put File",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Parse Variable",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Transform Table",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Union Table",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Transform Table maps rows from a source tabular variable to a target tabular variable and assigns values to named target fields using expressions. The source and target table settings together with the target-field mappings for `name` and `version` identify this operation.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 56,
+      "question": "Which options best describe what is required to create a custom horizontal pattern that discovers an operating system not discovered by the base installation patterns? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Select a CI Type",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Define Process Strategy",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Select Infrastructure Pattern Type",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Select Application Pattern Type",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A horizontal host-discovery pattern is an Infrastructure pattern, and its CI type determines the class of CI that the pattern discovers. ServiceNow distinguishes Infrastructure patterns for horizontal host discovery from Application patterns, which are not required for this operating-system discovery pattern.\n\n**Learn more:** [ServiceNow: Create or customize patterns](https://www.servicenow.com/docs/r/it-operations-management/discovery-and-service-mapping-patterns/t_CreatePatternPatDef.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 57,
+      "question": "What advantage do Discovery Range Sets provide?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Range Sets are the only way to have more than one IP Range defined within a Discovery Schedule.",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Range Sets show the number of IPs in a subnet.",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "All the necessary Range Sets are installed in the base installation of Discovery.",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Range Sets provide flexibility in management and identification of known networks for simplicity of administration.",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Range Sets provide flexibility for managing and identifying known networks, which simplifies Discovery administration.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 58,
+      "question": "While discovering a new SNMP network device, which option could result in the Discovery Status error “Active, couldn’t classify”?",
+      "options": [
+        {
+          "label": "A",
+          "text": "A firewall blocking the communication between the MID Server and the target device.",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "SNMP credentials are incorrect.",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "SNMP only behavior is not configured.",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "An SNMP Classification must be updated or created for the new device.",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "SNMP Discovery requires a matching SNMP classification to map the device’s returned OID information to a supported CI type. A new or unrecognized device can therefore remain active but unclassified until an appropriate SNMP Classification is created or updated.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 59,
+      "question": "What prefix do most Discovery properties use?",
+      "options": [
+        {
+          "label": "A",
+          "text": "discovery.prop",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "disco.release",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "glide.itom",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "glide.discovery",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Most ServiceNow Discovery system properties use the `glide.discovery` namespace prefix, as reflected in documented property names such as `glide.discovery.exclude_ip_sync_classes` and `glide.discovery.bgp_router_disable`.\n\n**Learn more:** [ServiceNow Discovery properties](https://www.servicenow.com/docs/r/it-operations-management/discovery/r_DiscoveryProperties.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 60,
+      "question": "What is the recommended way to exclude particular software from discovery on Windows and Unix Servers?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Pattern Modification",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Probe Modification",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Configuration Console",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Discovery Properties",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "ServiceNow Discovery’s Configuration Console provides a Software Filter for Windows and UNIX software packages. Administrators can specify keywords and set the filter to exclude packages whose names match those keywords, without customizing probes or patterns.\n\n**Learn more:** [ServiceNow Discovery Configuration Console](https://www.servicenow.com/docs/r/it-operations-management/discovery/c_DiscoveryConfigurationConsole.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 61,
+      "question": "How are relationships created between CIs in a horizontal pattern?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Relationships are created automatically for each successful connection section.",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "By using the Create Connections operation.",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "By using the Create Relation/Reference operation.",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Relationships cannot be created via patterns.",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The **Create Relation/Reference** pattern operation creates relationships and reference links between configuration items discovered within the pattern.\n\n**Learn more:** [Create New or Modify Patterns](https://www.servicenow.com/community/itom-articles/create-new-or-modify-patterns/ta-p/2295761)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 62,
+      "question": "Which of the following choices are the most likely results of the image shown? (select 3)\n\n![Question Image](https://cdn.examcademy.com/images/questions/1784740343836-czmt3dz0.png)",
+      "options": [
+        {
+          "label": "A",
+          "text": "A tabular variable named ‘WMI Query’.",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "A scalar variable named ‘MaximumWorkingSetSize’",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "A scalar variable named ‘PageFaults’.",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "A scalar variable named ‘PeakVirtualSize’.",
+          "isCorrect": false
+        },
+        {
+          "label": "E",
+          "text": "A tabular variable named ‘more_process_info’.",
+          "isCorrect": true
+        },
+        {
+          "label": "F",
+          "text": "A tabular variable named ‘Win32_Process’.",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The WMI query selects the `MaximumWorkingSetSize` and `PageFaults` properties from the `Win32_Process` class, so those returned properties are available as scalar variables. The target table is `$more_process_info`, which holds the query result set as a tabular variable. `PeakVirtualSize` is not included in the generated WQL statement, while `WMI Query` and `Win32_Process` identify the operation and queried WMI class rather than output variables.",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 63,
+      "question": "When using the SNMP Query operation in a pattern for a custom device query, what is the best practice?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Modify the default MIB information",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Enable SSH as a secondary protocol",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Use live devices in production",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Use the publish manufacturer’s device MIB",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Manufacturer-provided MIB modules define the device-specific SNMP OIDs needed to retrieve accurate information. ServiceNow documents that manufacturer MIBs are used by Discovery to extract device-specific data and can be loaded for querying the OIDs defined in the module.\n\n**Learn more:** [ServiceNow: Load a MIB module](https://www.servicenow.com/docs/r/it-operations-management/discovery/t_LoadAMIBModule.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 64,
+      "question": "During the Discovery process, what determines whether an Asset record is created?",
+      "options": [
+        {
+          "label": "A",
+          "text": "CMDB",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Model Category",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Model Product",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "ECC Queue",
+          "isCorrect": false
+        },
+        {
+          "label": "E",
+          "text": "Configuration Item",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A model category associates CI classes with asset classes, and its configuration determines whether the platform creates an asset from a CI and which asset class is used. Discovery can therefore create an asset record only when the applicable model category is configured for asset tracking.\n\n**Learn more:** [ServiceNow: Model categories](https://www.servicenow.com/docs/r/it-asset-management/product-catalog/c_ModelCategories.html) · [ServiceNow: Create model categories](https://www.servicenow.com/docs/r/it-service-management/product-catalog/t_CreatingModelCategories.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 65,
+      "question": "Which statements best describe the relationship between the Tomcat [cmdb_ci_app_server_tomcat] table and the Application Server [cdmb_ci_app_server] table? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Tomcat does not extend the Application Server table",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Tomcat table extends the Application Server table",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Tomcat table is a child of the Application Server table",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Tomcat table is a parent of the Application Server table",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Tomcat is a specialized Application Server CI class in the ServiceNow CMDB hierarchy. Its table extends the Application Server base table, making Tomcat a child table that inherits the Application Server table’s fields and behavior.\n\n**Learn more:** [ServiceNow CMDB tables descriptions](https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/cmdb-tables-details.html) · [ServiceNow: Create a CI class](https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/t_CreateCIType.html?contentId=gulNQcIL7wf6aBBzIztOrQ)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Configuration Management Database"
+      ]
+    },
+    {
+      "id": 66,
+      "question": "The deletion strategy for related Disk CIs discovered through the Linux Server pattern is set to ‘Mark as absent’. If a related Disk CI is found during Linux Server discovery, but that same related Disk CI is not found the next time the Linux Server is discovered, the following occurs:",
+      "options": [
+        {
+          "label": "A",
+          "text": "The Disk Status CI (install_status) is set to Absent.",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "The Disk CI Operational Status (operational_status) is set to Non-Operational.",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "The Linux Server CI Operational Status (operational_status) is set to Non-Operational.",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "The Linux Server CI Status (install_status) is set to Absent.",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "For a related CI that is no longer found during a subsequent pattern-based Discovery run, **Mark as absent** sets that related CI’s Status (`install_status`) to **Absent**. It does not change either CI’s `operational_status` or mark the main Linux Server CI absent. [ServiceNow: CI deletion strategies for pattern discovery](https://www.servicenow.com/docs/r/it-operations-management/discovery/deletion-strategy.html)\n\n**Learn more:** [ServiceNow — CI deletion strategies for pattern discovery](https://www.servicenow.com/docs/r/it-operations-management/discovery/deletion-strategy.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 67,
+      "question": "Which of the following choices are benefits of Tracked Configuration Files? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Content version comparison",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Files tracked as CIs",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Unwanted files removed from target",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "No credentials needed",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Tracked Configuration Files are stored as configuration items (CIs) in the CMDB and can retain file contents and previous versions, enabling comparison of configuration-file versions. [ServiceNow: Configuration file tracking](https://www.servicenow.com/docs/en-US/bundle/zurich-it-operations-management/page/product/discovery/concept/tracked-config-files.html)\n\n**Learn more:** [ServiceNow: Configuration file tracking](https://www.servicenow.com/docs/en-US/bundle/zurich-it-operations-management/page/product/discovery/concept/tracked-config-files.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 68,
+      "question": "Which ECC Queue message holds the XML payload returned by the MID Server?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Ready",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Output",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Pending",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Input",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "An ECC Queue input message is sent from the MID Server back to the ServiceNow instance and contains the returned XML results. Output messages travel in the opposite direction, from the instance to the MID Server.\n\n**Learn more:** [ECC queue for Discovery](https://www.servicenow.com/docs/r/it-operations-management/discovery/r_DiscoveryStatusECCQueue.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 69,
+      "question": "During the Port Scan phase, what could the warning-level error “No results returned from probe.” indicate?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Process Classifier incorrectly configured",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Logical or physical firewall preventing connectivity",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Wrong credentials",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Incorrect Datasource Precedence",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A physical or logical firewall can block the MID Server’s traffic to the target, preventing the port-scan probe from connecting and returning results. Credential, process-classifier, and datasource-precedence settings do not typically cause a network-level port-scan connectivity failure.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Engagement Readiness"
+      ]
+    },
+    {
+      "id": 70,
+      "question": "Which of the following is contained within an extension section of a discovery pattern?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Shared libraries",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Connection sections",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Identification sections",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Network libraries",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A Discovery Pattern extension section contains a preconfigured set of discovery steps known as a shared library. Identification and connection sections belong to the main pattern structure, while network libraries are not the defined extension-section content type.\n\n**Learn more:** [Enhance patterns without modifying identification sections](https://www.servicenow.com/docs/r/it-operations-management/discovery-and-service-mapping-patterns/modify-pattern-using-extensions.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 71,
+      "question": "Which of the following choices can be selected under **ACTION ON ALL** in the Recommended Actions pane for an Automated Error Messages list in **Discovery &gt; Home**? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Ping IP Addresses",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Retry Discovery",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "View instructions",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Make Ranges",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "For Automation Error Messages in ServiceNow Discovery Home, the Recommended Actions workflow lets users view error-specific remediation instructions and retry Discovery for all instances after completing the recommended remediation. These are ACTION ON ALL operations.\n\n**Learn more:** [ServiceNow Discovery Home page](https://www.servicenow.com/docs/r/it-operations-management/discovery/discovery-home-page.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 72,
+      "question": "For a Parse Variable operation that uses the Delimited Text parsing strategy, which options are available within a step? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Positions",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Use SNMP Browser",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Delimiters",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Merge Criteria",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Delimited Text parsing splits a variable’s value using specified delimiters and returns the segment at a specified position. Therefore, its relevant step options are Positions and Delimiters.",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 73,
+      "question": "On the ECC Queue, sensor records have a Queue value of ___________, and probe records have a Queue value of ___________.",
+      "options": [
+        {
+          "label": "A",
+          "text": "input, output",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "started, ready",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "ready, started",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "output, input",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "In the ECC Queue, probe records represent outbound requests sent from the instance to the MID Server and therefore carry a Queue value of output, while sensor records represent the data returned from the MID Server for processing by the instance and carry a Queue value of input.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 74,
+      "question": "Which of the following related lists can help troubleshoot discovery from a discovery status? (select 3)",
+      "options": [
+        {
+          "label": "A",
+          "text": "ECC Queue",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Devices",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Running Processes",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Discovery Log",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "The ECC Queue exposes Discovery’s queued input and output messages, Devices identifies the configuration items found during the discovery run, and the Discovery Log records discovery activity and errors. Together, these related lists provide the execution, target, and diagnostic details needed to troubleshoot Discovery.",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Engagement Readiness"
+      ]
+    },
+    {
+      "id": 75,
+      "question": "Which of the following can be used in the Debug Identification section in Debug Mode for an infrastructure pattern? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "IP",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "AWS Endpoint",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "PID",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Host Name",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "For an infrastructure pattern, Debug Mode identifies the target host by its IP address or host name. ServiceNow’s Discovery guidance describes entering the host IP address in Debug Mode, and its training guidance labels this input as Host Name/IP; AWS endpoint and PID are not applicable identifiers for this pattern type.\n\n**Learn more:** [Create a pattern and a schedule for host-based serverless Discovery](https://www.servicenow.com/docs/r/de-DE/it-operations-management/discovery/create-pattern-for-proxy-serverless.html) · [Help with Extend Windows OS - Servers Pattern / Discovery Lab](https://www.servicenow.com/community/training-and-certifications/help-with-extend-windows-os-servers-pattern-discovery-lab/td-p/2622628)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 76,
+      "question": "What are three methods for extending Discovery?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Classifiers, Fingerprinting, Probes & Sensors",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Flow Designer, Classifiers, Probes & Sensors",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Classifiers, Probes & Sensors, Discovery Patterns",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Fingerprinting, Classifiers, Discovery Pattern",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "ServiceNow Discovery can be extended through classifiers that control identification and exploration behavior, custom probes and sensors that gather and process additional CI data, and custom Discovery patterns that define discovery logic. Fingerprinting is a Discovery function, not an extension mechanism. [Discovery classifiers](https://www.servicenow.com/docs/r/it-operations-management/discovery/discovery-classifiers.html), [Create or modify a probe](https://www.servicenow.com/docs/r/it-operations-management/discovery/modify-a-probe.html), and [Create or customize patterns](https://www.servicenow.com/docs/r/it-operations-management/discovery-and-service-mapping-patterns/t_CreatePatternPatDef.html) document these customization points.\n\n**Learn more:** [Discovery classifiers](https://www.servicenow.com/docs/r/it-operations-management/discovery/discovery-classifiers.html) · [Create or modify a probe](https://www.servicenow.com/docs/r/it-operations-management/discovery/modify-a-probe.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 77,
+      "question": "The following displays a portion of the **Windows OS - Servers** pattern in Pattern Designer:\n\n![Question Image](https://cdn.examcademy.com/images/questions/1784745781433-wwc44zk0.png)\n\nWhich of the steps shown uses a shared library?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Step 26",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Neither step",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Step 25",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Both steps",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "ServiceNow shared libraries are reusable sequences of discovery steps that a pattern invokes through a library reference. **Windows - Storage** is such a shared-library reference, whereas the step that inserts the server’s total disk space is a regular operation within the pattern.\n\n**Learn more:** [Enhance patterns without modifying identification sections](https://www.servicenow.com/docs/r/it-operations-management/discovery-and-service-mapping-patterns/modify-pattern-using-extensions.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 78,
+      "question": "Which component of Agent Client Collector must be configured to execute osquery commands on a CI?",
+      "options": [
+        {
+          "label": "A",
+          "text": "ACC Websocket Endpoint",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Credential-less Discovery",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Check",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Infrastructure Patterns",
+          "isCorrect": false
+        },
+        {
+          "label": "E",
+          "text": "Policies",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A Check defines the osquery commands that Agent Client Collector runs for a CI, including their execution configuration. ACC can execute osquery commands on managed agents and process the returned results.\n\n**Learn more:** [Agent Client Collector API](https://www.servicenow.com/docs/r/it-operations-management/agent-client-collector/acc-api.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 79,
+      "question": "From Pattern Designer, which horizontal pattern type is shown below?\n\n![Question Image](https://cdn.examcademy.com/images/questions/1784746149530-rowmbpua.png)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Application",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Computer System",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Infrastructure",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Service Mapping",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The `computer_system` label denotes the Computer System horizontal pattern type in Pattern Designer.\n\n**Learn more:** [ServiceNow: Patterns and horizontal discovery](https://www.servicenow.com/docs/r/it-operations-management/discovery/c-UsingPatternsForHorizontalDiscovery.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 80,
+      "question": "Which selections must be made to trigger a custom pattern? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "CI Type",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Asset Record",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "CI Classification",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "CI Entry Point",
+          "isCorrect": false
+        },
+        {
+          "label": "E",
+          "text": "CI Class Process Handler",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A custom Pattern is triggered through Discovery's classification framework: the CI Classification record associates the discovered CI Type with the specific pattern that should run against it. Selecting the CI Type and configuring its CI Classification record are the two selections that determine which custom pattern Discovery invokes; an Asset Record, a CI Entry Point, or a CI Class Process Handler play no role in the pattern-triggering logic.",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 81,
+      "question": "Which selections are required to launch any pattern? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "CI Classification",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "CI Serial Number Attribute",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Data Certification",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "CI Type",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "ServiceNow Discovery launches patterns through CI classification and uses the CI type to identify the configuration item type that the pattern discovers. Data certification and a CI serial-number attribute are not required to launch a pattern.\n\n**Learn more:** [Patterns and horizontal discovery](https://www.servicenow.com/docs/r/it-operations-management/discovery/c-UsingPatternsForHorizontalDiscovery.html) · [Create or customize patterns](https://www.servicenow.com/docs/r/it-operations-management/discovery-and-service-mapping-patterns/t_CreatePatternPatDef.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 82,
+      "question": "If the WMI service is not running on a host, discovery of which devices will be prevented?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Network",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Windows",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Storage",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Unix",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "ServiceNow Discovery uses WMI to scan and collect data from Windows machines. When the WMI service is unavailable on a target host, Discovery cannot perform its WMI-based Windows discovery; network and UNIX discovery use other protocols.\n\n**Learn more:** [ServiceNow Discovery — Windows discovery](https://www.servicenow.com/docs/en-US/bundle/zurich-it-operations-management/page/product/discovery/reference/r_DataCollDiscoWindowsComputers.html) · [ServiceNow Discovery — Examples of Discovery behavior functionalities](https://www.servicenow.com/docs/r/it-operations-management/discovery/r_DefineTheFunctionalities.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Engagement Readiness"
+      ]
+    },
+    {
+      "id": 83,
+      "question": "For a pattern operation, which of the following options is used to combine variables into a single variable in **Value** fields?",
+      "options": [
+        {
+          "label": "A",
+          "text": "[*]",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "AND",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "+",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "==",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The `+` operator concatenates variables in Value fields, producing a single combined variable value.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 84,
+      "question": "From the Discovery Status record, what does a Device record contain?",
+      "options": [
+        {
+          "label": "A",
+          "text": "the contents of the discovered CI",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "contains a link to the discovered CI",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "the CMDB Health Dashboard link",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "contains a link to the discovered Asset",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A Discovery Device History record includes a **CMDB CI** reference field that identifies the device’s corresponding Configuration Item in the CMDB. It therefore contains a link to the discovered CI, rather than the CI’s contents or a link to an asset.\n\n**Learn more:** [ServiceNow: Discovery device history](https://www.servicenow.com/docs/r/it-operations-management/discovery/r_DiscoveryStatusDevices.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 85,
+      "question": "Which option most accurately describes the Reconciliation process?",
+      "options": [
+        {
+          "label": "A",
+          "text": "The process of reconciling a deleted CI, if it is identified as a duplicate. The result is stored in de-duplication tasks.",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "The process of reconciling uniquely identifying CIs, to determine if the CI already exists in the CMDB or if it is a newly discovered CI.",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "The process of reconciling CIs and CI attributes by allowing only designated authoritative data sources to write to the CMDB at the CI table and attribute level.",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "The process of normalizing applications, to allow the data to be used by Software Asset Management.",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Reconciliation controls updates to configuration items and their attributes by permitting only designated authoritative data sources to write to the CMDB at the CI-table and attribute levels. This prevents conflicting updates from multiple sources.\n\n**Learn more:** [ServiceNow: Components and process of Identification and Reconciliation](https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/c_CompsandProcessIDandReconcil.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Configuration Management Database"
+      ]
+    },
+    {
+      "id": 86,
+      "question": "In a pattern operation, which of the following correctly references the value of the `executableDir` variable from the tabular `process` variable?",
+      "options": [
+        {
+          "label": "A",
+          "text": "process(executableDir)",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "$$process_executableDirC.·“process_executableDir”",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "$$process.executableDir",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "In ServiceNow Discovery patterns, variables are prefixed with `$`, and a column within a tabular variable is referenced using dot notation. Therefore, the `executableDir` column of `process` is referenced as `$process.executableDir`.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 87,
+      "question": "Which file on the MID Server host stores the URL of the connected instance?",
+      "options": [
+        {
+          "label": "A",
+          "text": "wrapper.override.conf",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "config.yml",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "settings.bat",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "config.xml",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "The MID Server’s `config.xml` file contains the required `url` parameter, which specifies the URL of the associated ServiceNow instance.\n\n**Learn more:** [ServiceNow — MID Server parameters](https://www.servicenow.com/docs/r/servicenow-platform/mid-server/mid-server-parameters.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 88,
+      "question": "When installing a MID Server on a supported Windows device with the MSI installer, which right must be assigned to the Service Account?",
+      "options": [
+        {
+          "label": "A",
+          "text": "MID Server User Role",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Root",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Log on as service",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Domain Admin",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A Windows account used to run a MID Server service requires the **Log on as a service** user right. The service account should be a non-administrative account with this right.\n\n**Learn more:** [Install a MID Server on Windows](https://www.servicenow.com/docs/r/servicenow-platform/mid-server/mid-server-install-prereqs.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 89,
+      "question": "Which option best characterizes the primary KPIs for CMDB Health?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Correctness, Completeness, Compliance",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Compliance, Ownership, Reconciliation",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Speed of Discovery, Type of CI Class, Staleness",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Last discovered CIs, Correctness Required",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "CMDB Health uses Completeness, Correctness, and Compliance as its core KPI categories for assessing the quality and governance of configuration item data.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Configuration Management Database"
+      ]
+    },
+    {
+      "id": 90,
+      "question": "Which ServiceNow platform capability can automatically change an attribute of a configuration item when it is initially added to the CMDB?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Business Rule",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Cl Class Manager",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "UI Policy",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Scheduled Jo",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A Business Rule is server-side automation that can run when a record is inserted. A before-insert Business Rule can set field values on the new configuration-item record as part of the save operation.\n\n**Learn more:** [ServiceNow: Classic Business rules](https://www.servicenow.com/docs/r/api-reference/business-rules-classic/c_BusinessRules.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Configuration Management Database"
+      ]
+    },
+    {
+      "id": 91,
+      "question": "Which of the following can be categories after you select the **Errors** tile from **Discovery &gt; Home**? (select 3)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Configuration",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Credentials",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Completeness",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Correctness",
+          "isCorrect": false
+        },
+        {
+          "label": "E",
+          "text": "Network",
+          "isCorrect": true
+        },
+        {
+          "label": "F",
+          "text": "Schedule",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "ServiceNow groups Discovery errors by root-cause category, including configuration problems, credential/authentication problems, and network/connectivity problems. Completeness and correctness describe CMDB data quality rather than Discovery error categories, and Schedule is not an error category.\n\n**Learn more:** [Discovery Home page](https://www.servicenow.com/docs/r/it-operations-management/discovery/discovery-home-page.html) · [Fix application service errors in bulk](https://www.servicenow.com/docs/r/it-operations-management/service-mapping/fix-bus-serv-errors-by-category.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 92,
+      "question": "Which physical and/or logical components must be managed in order to deliver a product or service?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Configuration Items",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Parent/Child Classes",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Process Handlers",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Attributes",
+          "isCorrect": false
+        },
+        {
+          "label": "E",
+          "text": "CSDM Component",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Configuration items are the physical or logical components that need to be controlled and managed to provide a product or service.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Configuration Management Database"
+      ]
+    },
+    {
+      "id": 93,
+      "question": "Which selections are required to create a custom horizontal pattern for discovering a computer operating system? *(select 2)*",
+      "options": [
+        {
+          "label": "A",
+          "text": "Process Strategy Type",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Application Pattern Type",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Infrastructure Pattern Type",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "CI Type",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Operating-system discovery is performed through an Infrastructure Pattern Type, and the pattern must specify the CI Type for the configuration item class it will create or update.",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 94,
+      "question": "Which are the primary KPIs for the CMDB Health scorecard? (select 3)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Completeness",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Compliance",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Duplicates",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Correctness",
+          "isCorrect": true
+        },
+        {
+          "label": "E",
+          "text": "Staleness",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "CMDB Health aggregates its CI health score from the Completeness, Correctness, and Compliance KPIs. Duplicate and stale CIs are data-integrity metrics within the Correctness KPI, rather than standalone scorecard KPIs.\n\n**Learn more:** [ServiceNow: CMDB Health KPIs and metrics](https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/r_CMDBHealthMetrics.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Configuration Management Database"
+      ]
+    },
+    {
+      "id": 95,
+      "question": "In IT environments, what is horizontal discovery used for?",
+      "options": [
+        {
+          "label": "A",
+          "text": "A strategy for managing user access",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "A method to map application dependencies",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "A way to visualize network traffic",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "A technique for discovering devices",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Horizontal discovery scans an IT environment to find and identify devices and populate information about them, rather than mapping an application's dependencies.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 96,
+      "question": "As the initial step of horizontal discovery, where is the Shazzam probe placed within a request?",
+      "options": [
+        {
+          "label": "A",
+          "text": "IP services",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "ECC queue",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Target IP address",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Port probes",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "ServiceNow Discovery places the Shazzam probe, followed by port probes, into a request in the External Communication Channel (ECC) queue. The MID Server retrieves that request from the queue to run the probes against the target host.\n\n**Learn more:** [ServiceNow: Horizontal discovery process flow with probes and sensors](https://www.servicenow.com/docs/r/it-operations-management/discovery/c_DiscoProcessFlows.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 97,
+      "question": "Which service must be running on a host to detect a Windows device?",
+      "options": [
+        {
+          "label": "A",
+          "text": "SSH",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "WMI",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "WinRM",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "CIM",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Windows device detection commonly relies on Windows Management Instrumentation (WMI) to query the host for operating-system and system information. WMI must therefore be available and running on the Windows host.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 98,
+      "question": "![Question Image](https://cdn.examcademy.com/images/questions/1785098982990-okzfa858.png)\n\nBased on the following images, which option best describes what happens if Discovery sets the `name` attribute of a discovered Windows Server CI to `Windows1`, and Altiris discovery then runs and detects `Windows2` for the `name` attribute on that same CI?",
+      "options": [
+        {
+          "label": "A",
+          "text": "The name of the CI stays 'Windows1'.",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "The name of the CI changes to 'Windows2'.",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "The name of the CI does not populate with either discovery.",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "The CI is not discovered because Discovery is not listed in either image.",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Static reconciliation rules establish the precedence order for authorized data sources updating a CI attribute. The ServiceNow/Discovery source has order 100, while Altiris has order 300; therefore, Altiris is a lower-priority source and its update to the `name` attribute is rejected. The CI name remains `Windows1`.\n\n**Learn more:** [ServiceNow: Reconciliation rules](https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/r_ReconciliationRulesPrinciples.html) · [ServiceNow: Create a reconciliation rule for a non-CMDB table](https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/create-reconciliation-rule-non-cmdb.html?contentId=HLutY42w2NGkyY3bZS4hwA)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Configuration Management Database"
+      ]
+    },
+    {
+      "id": 99,
+      "question": "Which items appear in the far-right section of the Pattern Designer for horizontal patterns? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "CI Attributes",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Operations",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Temporary Variables",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "CMDB Dashboard",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "In the ServiceNow Pattern Designer, when authoring a horizontal discovery pattern the right-hand side of the interface presents the 'CI Attributes' tab, used to map discovered values to CI attribute fields, and the 'Temporary Variables' tab, used to hold intermediate values that exist only during pattern execution; the palette of draggable steps ('Operations') is instead positioned on the left of the canvas, not the far right.",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 100,
+      "question": "Which related list on a classifier determines the Horizontal Pattern probe that is launched?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Discovery Log",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Classification Criteria",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Pattern probes",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Triggers probes",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "A classifier’s **Triggers probes** related list defines the probes that Discovery launches after classification. Adding the Horizontal Pattern probe there causes Discovery to launch it and the pattern configured for it.\n\n**Learn more:** [Patterns and horizontal discovery](https://www.servicenow.com/docs/r/it-operations-management/discovery/c-UsingPatternsForHorizontalDiscovery.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 101,
+      "question": "For a pattern operation, which of the following choices could validly replace `&lt;_&gt;`? (select 3)\n\n`$IfTable&lt;_&gt;.InstanceID`",
+      "options": [
+        {
+          "label": "A",
+          "text": "[3]",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "[X]",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "[&]",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "[.]",
+          "isCorrect": false
+        },
+        {
+          "label": "E",
+          "text": "[*]",
+          "isCorrect": true
+        },
+        {
+          "label": "F",
+          "text": "[]",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "A tabular variable can be referenced with a numeric row index such as `[3]`, an empty selector `[]` to retrieve column values sequentially from the current row, or `[*]` to retrieve them sequentially from the first row. Each form can precede `.InstanceID` for the `IfTable` tabular variable.\n\n**Learn more:** [ServiceNow: Enter values and variables in patterns](https://www.servicenow.com/docs/r/pt-BR/washingtondc/it-operations-management/discovery-and-service-mapping-patterns/r_UsefulShortcutsPatDef.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 102,
+      "question": "Which option best describes a Discovery schedule of the **Configuration Item** type?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Verifies Configuration Item data from the scanned IP ranges against the data in the CMDB.",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Creates only a list of discovered IPs in both IPv4 and IPv6 formats.",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Collects complete information from the scanned IP ranges and sends it to the CMDB.",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Directly populates records in the assets table.",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A Configuration Items Discovery schedule scans the configured IP ranges, gathers device configuration information, and uses Discovery identifiers to create or update corresponding configuration items in the CMDB.\n\n**Learn more:** [ServiceNow Discovery Schedule form reference](https://www.servicenow.com/docs/r/it-operations-management/discovery/discovery-schedule-form.html) · [ServiceNow Configuring Discovery](https://www.servicenow.com/docs/r/it-operations-management/discovery/c_DiscoveryConfiguration.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 103,
+      "question": "After running Discovery and opening the ECC Queue tab, which default fields are displayed? (select 3)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Details",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Topic",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Pattern log link",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "CMDB CI",
+          "isCorrect": false
+        },
+        {
+          "label": "E",
+          "text": "Queue",
+          "isCorrect": true
+        },
+        {
+          "label": "F",
+          "text": "Source",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "The ECC Queue includes **Topic** to identify the probe or pattern activity, **Queue** to indicate whether a message is input or output, and **Source** to identify the discovery target, such as its IP address. [MID Server ECC Queue — ServiceNow](https://www.servicenow.com/docs/r/servicenow-platform/mid-server/ecc-queue-mid-server.html)\n\n**Learn more:** [MID Server ECC Queue — ServiceNow](https://www.servicenow.com/docs/r/servicenow-platform/mid-server/ecc-queue-mid-server.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 104,
+      "question": "An application configuration file contains these three lines:\n\n- Line 1: `app build 1.2.3.4 version 5.14`\n- Line 2: `installation_dir=c:\\opt\\bin`\n- Line 3: `build_type=Server`\n\nWhich of the following methods can extract the build and version numbers from these lines with a horizontal discovery pattern? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Get Process operation with correct Port",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Find Matching URL operation with Target Variable",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Parse File operation with Delimited Text parsing strategy",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Parse File operation with Regular Expression parsing strategy",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "A Parse File operation can use delimited-text parsing to split the first line into space-separated fields and retrieve the build and version values. It can also use regular-expression parsing with capture groups for `1.2.3.4` and `5.14`.\n\n**Learn more:** [Discovering Eugene's “Special” Application](https://www.servicenow.com/community/itom-articles/discovering-eugene-s-special-application/ta-p/2297030) · [With RegEx in a pattern, how do you extract multiple values?](https://www.servicenow.com/community/itom-forum/with-regex-in-a-pattern-how-do-you-extract-multiple-values/td-p/920877/page/2)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 105,
+      "question": "Which of the following must be configured for a MID Server to access servers through WinRM? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "JEA Properties set to True",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "MID Servers must be configured as a trusted source with DNS",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "MID Servers need to be added to the WinRM Group policy on the Servers",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "MID Server Parameters Add WinRM",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "For a MID Server to reach Windows servers via WinRM for Discovery, the target servers must have the WinRM listener enabled and permitted through Group Policy so that the MID Server's requests are accepted by the WinRM service, and the MID Server itself must be configured with the appropriate WinRM parameter/protocol setting so it issues WinRM calls instead of defaulting to WMI/DCOM. JEA is an optional constrained-endpoint hardening feature rather than a baseline requirement, and trusted-source/DNS registration addresses network identification rather than the WinRM protocol handshake itself.",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 106,
+      "question": "Which of the following options must be installed on a MID Server to run Credential-less Discovery?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Credential-less Extension",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Nmap",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Advanced IP Scanner",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Defender",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "Credential-less Discovery runs Nmap commands from the MID Server to collect information without credentials. Installing Nmap adds the Nmap MID Server capability, which is required for a MID Server to perform credential-less discovery.\n\n**Learn more:** [Install and uninstall Nmap on a MID Server](https://www.servicenow.com/docs/r/servicenow-platform/mid-server/install-nmap-on-mid-server.html) · [Credential-less discovery with Nmap](https://www.servicenow.com/docs/r/it-operations-management/discovery/nmap-credential-less-discovery.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 107,
+      "question": "Which of the following choices best represent the key capabilities of a ServiceNow ITOM Enterprise solution? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Create an Engaging User Experience",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Build New Apps Fast",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Manage Hybrid Clouds",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Proactively Eliminate Service Outages",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "ServiceNow ITOM provides visibility and governance across hybrid IT and cloud environments, while its AIOps and service-reliability capabilities proactively identify issues and help prevent service degradation and outages.\n\n**Learn more:** [ServiceNow IT Operations Management](https://www.servicenow.com/docs/r/it-operations-management/r_ITOMApplications.html) · [What is Hybrid Cloud?](https://www.servicenow.com/products/it-operations-management/what-is-hybrid-cloud.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Engagement Readiness"
+      ]
+    },
+    {
+      "id": 108,
+      "question": "Which of the following are automatically available by default as variables for horizontal discovery patterns? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "infrastructure_system",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "The CI Type on the Discovery Pattern form",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "windows_cmdb_ci",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "computer_system",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "Horizontal Discovery patterns provide `computer_system` by default. The selected CI Type also supplies the CI attribute variable set used to populate the discovered CI; `infrastructure_system` and `windows_cmdb_ci` are not default variables.",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 109,
+      "question": "What does the MID Server require to collect events from vCenter?",
+      "options": [
+        {
+          "label": "A",
+          "text": "vCenter Event Collector extension",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "MID SNMP Trap Listener extension",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Firewall",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "vCenter probes",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The vCenter Event Collector is a MID Server extension that listens for vCenter-related events and processes them to update the CMDB. It is the component specifically intended for vCenter event collection.\n\n**Learn more:** [ServiceNow: vCenter event collector](https://www.servicenow.com/docs/bundle/washingtondc-servicenow-platform/page/product/mid-server/concept/c_VCenterEventProcessorExtension.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 110,
+      "question": "Discovery identifies and maps dependencies for the following types of storage devices. (select 3)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Direct-attached storage (DAS)",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Network-attached storage (NAS)",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Storage area network (SAN)",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Multiple area network (MAN)",
+          "isCorrect": false
+        },
+        {
+          "label": "E",
+          "text": "Redundant Array of Independent Disks (RAID)",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "ServiceNow Discovery maps dependencies for direct-attached storage (DAS), network-attached storage (NAS), and storage area network (SAN) storage. Multiple area network (MAN) and RAID are not included among these storage categories.\n\n**Learn more:** [ServiceNow: Storage discovery](https://www.servicenow.com/docs/r/it-operations-management/itom-visibility/c_Storage.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 111,
+      "question": "Which option populates the **Location** field for a discovered CI?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Location field for a Discovery Schedule",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Location field for a parent CI Type",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Location field for a Port Probe",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Location report from the Discovery Dashboard",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The Location value on a Discovery Schedule is assigned to the configuration items that the schedule discovers. If the schedule’s Location field is empty, no location is assigned.\n\n**Learn more:** [ServiceNow Discovery Schedule form reference](https://www.servicenow.com/docs/r/it-operations-management/discovery/discovery-schedule-form.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 112,
+      "question": "When there are multiple CI data sources, which option is best for determining which source is allowed to update a CI attribute?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Business Rules",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Data Certification",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Transform Maps",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Reconciliation Rules",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "ServiceNow CMDB reconciliation rules establish data-source precedence and attribute-level authority, determining which source can update a CI attribute when multiple sources supply data.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 113,
+      "question": "Which entry point type must a horizontal pattern use to execute from a process classifier?",
+      "options": [
+        {
+          "label": "A",
+          "text": "A subnet entry point type.",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "HTTP(S) entry point type if the pattern is running on a web server application.",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "TCP entry point type or ALL entry point type.",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "It does not matter, it is triggered for all entry point types.",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A horizontal Discovery pattern launched by a process classifier must use either a TCP entry point type or an ALL entry point type. These entry point types support execution when the classifier detects a matching process.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 114,
+      "question": "Which metrics make up the Completeness KPI for CMDB Health? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Required",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Recommended",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Audit",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Overall",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The CMDB Health Completeness KPI is composed of Required and Recommended metrics, which measure whether the applicable required and recommended configuration-item attributes are populated.",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Configuration Management Database"
+      ]
+    },
+    {
+      "id": 115,
+      "question": "What are the two primary options in a **Parse File** operation?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Discover Now and Quick Discovery",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Select Operating System and Method",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Select File and Define Parsing",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Match and Select File",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "In ServiceNow Pattern Designer, a Parse File operation uses a **Select File** field to specify the file and a parsing configuration, labeled **Define Parsing**, to determine how its contents are interpreted.\n\n**Learn more:** [Discovering Eugene’s “Special” Application](https://www.servicenow.com/community/itom-articles/discovering-eugene-s-special-application/ta-p/2297030)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Configuration"
+      ]
+    },
+    {
+      "id": 116,
+      "question": "For an SNMP Query pattern operation, which of these are valid Variable Types? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Test",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Table",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Scalar",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "CI Type",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "SNMP Query pattern operations support tabular and scalar results: a table represents tabular SNMP data, while a scalar represents a single SNMP value. ServiceNow’s Discovery documentation describes SNMP Query as “Tabular and Scalar.”\n\n**Learn more:** [ServiceNow: Command List form for pattern-based discovery](https://www.servicenow.com/docs/r/it-operations-management/discovery/commands-list-discovery.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 117,
+      "question": "Which option best characterizes a horizontal discovery pattern?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Steps that execute operations",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Credential depot",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Port scanning tool",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "Classifiers that execute probes",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A ServiceNow discovery pattern is a series of operations executed in sequence to identify and explore configuration items and populate CMDB data. Classifiers can trigger a Horizontal Pattern probe, but they are not the pattern itself.\n\n**Learn more:** [ServiceNow: Patterns and horizontal discovery](https://www.servicenow.com/docs/r/it-operations-management/discovery/c-UsingPatternsForHorizontalDiscovery.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 118,
+      "question": "Which of the following properties defines the maximum overall size for the returned payload that originates from patterns?",
+      "options": [
+        {
+          "label": "A",
+          "text": "cmdb.properties.payload_max_size",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "glide.discovery.payload_max",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "mid.discovery.max_payload_size",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "mid.discovery.max_pattern_payload_size",
+          "isCorrect": true
+        }
+      ],
+      "explanation": "The `mid.discovery.max_pattern_payload_size` MID Server property sets the maximum overall size, in bytes, of result payloads produced by patterns.\n\n**Learn more:** [ServiceNow MID Server properties](https://www.servicenow.com/docs/r/servicenow-platform/mid-server/r_MIDServerProperties.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 119,
+      "question": "In a discovery pattern, which CI types are available in the Pattern Designer's CI Attributes pane? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Global CI types",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "Main pattern CI type",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "Related CI types",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "All CI types",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "The CI Attributes pane provides attributes for the pattern’s main CI type and for related CI types that have been added to the pattern. A discovery pattern can define one main CI type and multiple related CI types.\n\n**Learn more:** [Discover related items together with the main CI](https://www.servicenow.com/docs/r/it-operations-management/discovery-and-service-mapping-patterns/add-related-cis-to-the-main-ci-pattern.html) · [Discovery patterns used by ITOM Visibility](https://www.servicenow.com/docs/r/it-operations-management/discovery-and-service-mapping-patterns/c_MappingPatternsCustomization.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 120,
+      "question": "Which choices are more likely to result in data loss during CI reclassification? (select 2)",
+      "options": [
+        {
+          "label": "A",
+          "text": "Switching",
+          "isCorrect": true
+        },
+        {
+          "label": "B",
+          "text": "Identifying",
+          "isCorrect": false
+        },
+        {
+          "label": "C",
+          "text": "Downgrading",
+          "isCorrect": true
+        },
+        {
+          "label": "D",
+          "text": "Upgrading",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A CI class downgrade can remove attributes that exist only on the more-specific original class. A class switch includes a downgrade before moving into the new class branch, so attributes not shared by the classes can be lost. ServiceNow advises avoiding downgrade and switch operations because they can lead to data loss.\n\n**Learn more:** [ServiceNow: Reclassify a CI](https://www.servicenow.com/docs/r/servicenow-platform/configuration-management-database-cmdb/t_ManuallyReclassifyCI.html)",
+      "isMultiple": true,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Configuration Management Database"
+      ]
+    },
+    {
+      "id": 121,
+      "question": "Given a custom column named `u_custom_column` on the `cmdb_ci_linux_server` table, which variable syntax should be used to populate that column in a horizontal discovery pattern with the **Set Parameter Value** operation?",
+      "options": [
+        {
+          "label": "A",
+          "text": "$$user_var_custom_column",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "$$cmdb_ci_linux_server.u_custom_column.INSERT",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "$$u_custom_column[1].cmdb_ci_linux_server",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "$$cmdb_ci_linux_server[*].u_custom_column",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "A custom CI attribute in a horizontal Discovery pattern is referenced by its CI table and column name, and the `.INSERT` suffix marks it for population during the CI insert/update operation: `$cmdb_ci_linux_server.u_custom_column.INSERT`. Pattern variables use the `$` prefix, and the Set Parameter Value operation assigns a parameter value.\n\n**Learn more:** [Create or customize patterns](https://www.servicenow.com/docs/r/it-operations-management/discovery-and-service-mapping-patterns/t_CreatePatternPatDef.html)",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Discovery Pattern Design"
+      ]
+    },
+    {
+      "id": 122,
+      "question": "![Question Image](https://cdn.examcademy.com/images/questions/1785103439012-lwjzvdor.png)\n\nBased on the image, which of the following statements is also true about London Linux Servers?",
+      "options": [
+        {
+          "label": "A",
+          "text": "It is a CMDB Group with Dashboard Group type.",
+          "isCorrect": false
+        },
+        {
+          "label": "B",
+          "text": "It is a CMDB Group with Health Group type.",
+          "isCorrect": true
+        },
+        {
+          "label": "C",
+          "text": "It is a Datacenter Group in London.",
+          "isCorrect": false
+        },
+        {
+          "label": "D",
+          "text": "It is a CMDB Group with Default Group type.",
+          "isCorrect": false
+        }
+      ],
+      "explanation": "London Linux Servers appears in the CMDB Health Group List, which identifies it as a CMDB Group with the Health Group type.",
+      "isMultiple": false,
+      "isMatching": false,
+      "matchingPairs": [],
+      "source": "CIS-DISCOVERY",
+      "tags": [
+        "Configuration Management Database"
+      ]
+    }
+  ]
+}
