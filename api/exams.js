@@ -12,11 +12,20 @@ function slugifyId(str) {
   );
 }
 
-function getGitHubConfig() {
-  const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || '';
-  const owner = process.env.GITHUB_OWNER || process.env.VERCEL_GIT_REPO_OWNER || '';
-  const repo = process.env.GITHUB_REPO_NAME || process.env.VERCEL_GIT_REPO_SLUG || '';
-  const fullRepo = process.env.GITHUB_REPO || (owner && repo ? `${owner}/${repo}` : '');
+function getGitHubConfig(req) {
+  const headerToken = (req?.headers?.['x-github-token'] || '').toString().trim();
+  const token =
+    headerToken ||
+    process.env.GITHUB_TOKEN ||
+    process.env.VITE_GITHUB_TOKEN ||
+    process.env.GH_TOKEN ||
+    '';
+
+  const owner = process.env.GITHUB_OWNER || process.env.VERCEL_GIT_REPO_OWNER || 'DL-Valencia';
+  const repo =
+    process.env.GITHUB_REPO_NAME || process.env.VERCEL_GIT_REPO_SLUG || 'servicenow_mock_exam';
+  const fullRepo =
+    process.env.GITHUB_REPO || (owner && repo ? `${owner}/${repo}` : 'DL-Valencia/servicenow_mock_exam');
   const branch = process.env.GITHUB_BRANCH || process.env.VERCEL_GIT_COMMIT_REF || 'main';
 
   return { token, fullRepo, branch };
@@ -36,23 +45,20 @@ export default async function handler(req, res) {
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Cache-Control', 'no-store, max-age=0');
 
-  const { token, fullRepo, branch } = getGitHubConfig();
+  const { token, fullRepo, branch } = getGitHubConfig(req);
 
   // ---------------------------------------------------------------------------
   // GET /api/exams — Fetch live exam modules from GitHub src/data/exams/*.json
   // ---------------------------------------------------------------------------
   if (req.method === 'GET') {
-    if (!fullRepo) {
-      return res.status(200).json({
-        ok: false,
-        configured: false,
-        reason: 'GitHub repository environment variables not detected.'
-      });
-    }
-
     try {
       const dirUrl = `https://api.github.com/repos/${fullRepo}/contents/src/data/exams?ref=${encodeURIComponent(branch)}`;
-      const dirRes = await githubRequest(dirUrl, token);
+      let dirRes = await githubRequest(dirUrl, token);
+
+      // If token is invalid/expired on a public repo, retry unauthenticated so public visitors still load exams
+      if (!dirRes.ok && token) {
+        dirRes = await githubRequest(dirUrl, '');
+      }
 
       if (!dirRes.ok) {
         return res.status(200).json({
@@ -74,12 +80,9 @@ export default async function handler(req, res) {
       const exams = await Promise.all(
         jsonFiles.map(async (fileItem) => {
           try {
-            // Fetch raw content using download_url or git blob API
             let rawText = '';
             if (fileItem.download_url) {
-              const rawRes = await fetch(fileItem.download_url, {
-                headers: token ? { Authorization: `Bearer ${token}` } : {}
-              });
+              const rawRes = await fetch(fileItem.download_url);
               if (rawRes.ok) {
                 rawText = await rawRes.text();
               }
@@ -138,12 +141,12 @@ export default async function handler(req, res) {
   // POST /api/exams — Save/Commit uploaded JSON exam to GitHub src/data/exams/
   // ---------------------------------------------------------------------------
   if (req.method === 'POST') {
-    if (!token || !fullRepo) {
+    if (!token) {
       return res.status(501).json({
         ok: false,
         configured: false,
         error:
-          'GITHUB_TOKEN is not configured in Vercel Environment Variables. Saved to local browser only.'
+          'No GitHub Token found. Paste a Classic GitHub Token (ghp_...) in Admin Portal → Cloud Sync Token, or set GITHUB_TOKEN in Vercel Environment Variables and Redeploy.'
       });
     }
 
@@ -179,7 +182,7 @@ export default async function handler(req, res) {
 
       const fileUrl = `https://api.github.com/repos/${fullRepo}/contents/${filePath}`;
 
-      // Check if file already exists to get its SHA for updating
+      // Check if file already exists on target branch to get its SHA for updating
       let existingSha = null;
       const checkRes = await githubRequest(
         `${fileUrl}?ref=${encodeURIComponent(branch)}`,
@@ -211,7 +214,7 @@ export default async function handler(req, res) {
         const errText = await putRes.text();
         return res.status(putRes.status).json({
           ok: false,
-          error: `GitHub commit failed (${putRes.status}): ${errText}`
+          error: `GitHub commit failed (${putRes.status}): Make sure you use a Classic Token (ghp_...) with the 'repo' scope checked, or set Contents: Read and Write on your Fine-Grained token. Details: ${errText}`
         });
       }
 
@@ -230,11 +233,11 @@ export default async function handler(req, res) {
   // DELETE /api/exams?id=<id> — Delete exam JSON file from GitHub src/data/exams/
   // ---------------------------------------------------------------------------
   if (req.method === 'DELETE') {
-    if (!token || !fullRepo) {
+    if (!token) {
       return res.status(501).json({
         ok: false,
         configured: false,
-        error: 'GITHUB_TOKEN is not configured in Vercel Environment Variables.'
+        error: 'No GitHub Token configured.'
       });
     }
 
@@ -280,4 +283,3 @@ export default async function handler(req, res) {
 
   return res.status(405).json({ ok: false, error: 'Method not allowed' });
 }
-
