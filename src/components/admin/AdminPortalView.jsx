@@ -258,7 +258,7 @@ export default function AdminPortalView() {
               <input
                 type="text"
                 className="form-input"
-                placeholder="Enter username (default: admin)"
+                placeholder="Enter administrator username"
                 value={usernameInput}
                 onChange={(e) => setUsernameInput(e.target.value)}
                 autoFocus
@@ -271,7 +271,7 @@ export default function AdminPortalView() {
               <input
                 type="password"
                 className="form-input"
-                placeholder="Enter passcode (default: admin123)"
+                placeholder="Enter administrator passcode"
                 value={passwordInput}
                 onChange={(e) => setPasswordInput(e.target.value)}
                 required
@@ -279,11 +279,6 @@ export default function AdminPortalView() {
             </div>
 
             {loginError && <div className="upload-error-box">⚠️ {loginError}</div>}
-
-            <div className="admin-login-hint">
-              <span>🔑 Default Credentials:</span>{' '}
-              <code>{adminCredentials.username}</code> / <code>{adminCredentials.password}</code>
-            </div>
 
             <div className="admin-login-actions">
               <button

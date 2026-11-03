@@ -80,7 +80,14 @@ export function ExamProvider({ children }) {
   });
 
   const adminCredentials = useMemo(() => {
-    return state.adminCredentials || { username: 'admin', password: 'admin123' };
+    const envUser = import.meta.env.VITE_ADMIN_USERNAME;
+    const envPass = import.meta.env.VITE_ADMIN_PASSWORD;
+    return (
+      state.adminCredentials || {
+        username: envUser || 'admin',
+        password: envPass || 'admin123'
+      }
+    );
   }, [state.adminCredentials]);
 
   // Bank filter state
@@ -332,8 +339,8 @@ export function ExamProvider({ children }) {
 
   const loginAdmin = useCallback(
     (username, password) => {
-      const validUser = (state.adminCredentials?.username || 'admin').trim();
-      const validPass = state.adminCredentials?.password || 'admin123';
+      const validUser = (adminCredentials.username || 'admin').trim();
+      const validPass = adminCredentials.password || 'admin123';
       if (username.trim() === validUser && password === validPass) {
         setIsAdminAuthenticated(true);
         sessionStorage.setItem('sn_admin_auth', 'true');
@@ -342,7 +349,7 @@ export function ExamProvider({ children }) {
       }
       return false;
     },
-    [state.adminCredentials, showToast]
+    [adminCredentials, showToast]
   );
 
   const logoutAdmin = useCallback(() => {
