@@ -462,3 +462,82 @@ export function formatTimerDisplay(seconds) {
   const secs = safeSecs % 60;
   return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
 }
+
+/**
+ * Non-throwing validator used by the Admin upload form.
+ * Returns { errors: string[], warnings: string[] } — errors block saving, warnings are advisory.
+ */
+export function validateExamQuestions(rawJson) {
+  const errors = [];
+  const warnings = [];
+  const list = Array.isArray(rawJson)
+    ? rawJson
+    : rawJson && Array.isArray(rawJson.questions)
+    ? rawJson.questions
+    : null;
+
+  if (!list) {
+    errors.push('Expected a JSON array of questions (or an object with a "questions" array).');
+    return { errors, warnings };
+  }
+
+  const seenIds = new Map();
+  const MAX_LISTED = 12;
+  const pushLimited = (bucket, msg, counter) => {
+    counter.n += 1;
+    if (counter.n <= MAX_LISTED) bucket.push(msg);
+    else if (counter.n === MAX_LISTED + 1) bucket.push('…and more. Fix the issues above first.');
+  };
+  const errCounter = { n: 0 };
+  const warnCounter = { n: 0 };
+
+  list.forEach((q, idx) => {
+    const n = idx + 1;
+    if (!q || typeof q !== 'object') {
+      pushLimited(errors, `Q${n}: not a valid object.`, errCounter);
+      return;
+    }
+    const text = String(q.question || q.text || '').trim();
+    if (!text) pushLimited(errors, `Q${n}: missing "question" text.`, errCounter);
+
+    const opts = Array.isArray(q.options) ? q.options : [];
+    const hasPairs = Array.isArray(q.pairs) && q.pairs.length >= 2;
+    if (!hasPairs && opts.length < 2) {
+      pushLimited(errors, `Q${n}: needs at least 2 options.`, errCounter);
+      return;
+    }
+
+    if (!hasPairs) {
+      const emptyOpt = opts.findIndex((o) => !String(o?.text ?? o?.value ?? '').trim());
+      if (emptyOpt !== -1) {
+        pushLimited(errors, `Q${n}: option ${emptyOpt + 1} has empty text.`, errCounter);
+      }
+      const correct = opts.filter((o) => o && o.isCorrect).length;
+      if (correct === 0) {
+        pushLimited(errors, `Q${n}: no option is marked "isCorrect": true.`, errCounter);
+      }
+      if (typeof q.isMultiple === 'boolean' && q.isMultiple !== (correct > 1) && correct > 0) {
+        pushLimited(
+          warnings,
+          `Q${n}: isMultiple is ${q.isMultiple} but ${correct} correct option(s) are marked.`,
+          warnCounter
+        );
+      }
+    }
+
+    if (q.id !== undefined && q.id !== null) {
+      const key = String(q.id);
+      if (seenIds.has(key)) {
+        pushLimited(errors, `Q${n}: duplicate id "${key}" (also used by Q${seenIds.get(key)}).`, errCounter);
+      } else {
+        seenIds.set(key, n);
+      }
+    }
+
+    if (!String(q.explanation || '').trim()) {
+      pushLimited(warnings, `Q${n}: no explanation.`, warnCounter);
+    }
+  });
+
+  return { errors, warnings };
+}

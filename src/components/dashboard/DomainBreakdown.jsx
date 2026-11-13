@@ -6,6 +6,12 @@ export default function DomainBreakdown() {
   const sortedTopics = Object.keys(dashboardStats.topicCounts).sort();
   const code = activeExam?.code || 'Exam';
 
+  // Weakest topic = lowest accuracy among topics you've already answered (needs >= 2 answers to be meaningful)
+  const weakest = sortedTopics
+    .map((tag) => ({ tag, p: dashboardStats.domainProgress?.[tag] }))
+    .filter(({ p }) => p && p.answered >= 2)
+    .sort((a, b) => a.p.accuracy - b.p.accuracy || b.p.total - a.p.total)[0];
+
   if (sortedTopics.length === 0) return null;
 
   return (
@@ -30,6 +36,20 @@ export default function DomainBreakdown() {
             answered progression.
           </p>
         </div>
+        <button
+          type="button"
+          className="btn btn-primary btn-sm weakest-topic-btn"
+          disabled={!weakest}
+          onClick={() => weakest && startTopicPractice(weakest.tag)}
+          title={
+            weakest
+              ? `Lowest accuracy so far: ${weakest.tag} (${weakest.p.accuracy}%)`
+              : 'Answer at least 2 questions in a topic to unlock this'
+          }
+        >
+          🎯 Drill Weakest Topic
+          {weakest ? ` · ${weakest.tag} (${weakest.p.accuracy}%)` : ''}
+        </button>
       </div>
 
       <div className="topics-grid">

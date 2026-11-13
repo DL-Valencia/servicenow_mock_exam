@@ -90,6 +90,9 @@ export function ExamProvider({ children }) {
     );
   }, [state.adminCredentials]);
 
+  // GitHub token (admin-only, stored in this browser) used by /api/exams to commit uploads to the repo
+  const githubToken = useMemo(() => (state.githubToken || '').trim(), [state.githubToken]);
+
   // Bank filter state
   const [bankFilters, setBankFilters] = useState({
     query: '',
@@ -371,34 +374,48 @@ export function ExamProvider({ children }) {
     [showToast]
   );
 
+  const updateGithubToken = useCallback(
+    (token) => {
+      const clean = (token || '').trim();
+      setState((prev) => ({ ...prev, githubToken: clean }));
+      showToast(clean ? '☁️ GitHub sync token saved.' : '☁️ GitHub sync token cleared.');
+    },
+    [showToast]
+  );
+
   // Upload & Save a new Exam JSON (saves to src/data/exams/<id>.json via Vite API + localStorage)
   const registerUploadedExam = useCallback(
     async (rawJson, metaOverrides = {}, options = {}) => {
       const normalized = normalizeExamPayload(rawJson, metaOverrides);
       let savedToFolder = false;
+      let syncError = '';
 
       try {
         const res = await fetch('/api/exams', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            ...(githubToken ? { 'x-github-token': githubToken } : {})
+          },
           body: JSON.stringify(normalized)
         });
-        if (res.ok) {
-          const data = await res.json();
-          if (data?.ok) {
-            savedToFolder = true;
-            setBundledExams((prev) => ({
-              ...prev,
-              [normalized.id]: {
-                ...normalized,
-                fileName: data.fileName || `${normalized.id}.json`,
-                isBundled: true
-              }
-            }));
-          }
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data?.ok) {
+          savedToFolder = true;
+          setBundledExams((prev) => ({
+            ...prev,
+            [normalized.id]: {
+              ...normalized,
+              fileName: data.fileName || `${normalized.id}.json`,
+              isBundled: true
+            }
+          }));
+        } else {
+          syncError = data?.error || `HTTP ${res.status}`;
         }
       } catch (err) {
         // Static build fallback: still stored in browser state
+        syncError = err.message;
         console.warn('Could not write directly to disk API, storing in browser storage:', err);
       }
 
@@ -431,11 +448,13 @@ export function ExamProvider({ children }) {
       showToast(
         savedToFolder
           ? `✅ "${normalized.code}" (${normalized.questions.length} Qs) saved to repository for all devices!`
-          : `⚠️ "${normalized.code}" saved to this browser only (Set GITHUB_TOKEN in Vercel to sync across all devices).`
+          : `⚠️ "${normalized.code}" saved to this browser only${
+              syncError ? ` (${syncError})` : ''
+            }. Add a GitHub token in Admin → Admin Credentials → Cloud Sync Token to publish for all devices.`
       );
       return normalized;
     },
-    [showToast]
+    [showToast, githubToken]
   );
 
   // Sync a browser-only custom exam to the repository (/api/exams) so all devices can see it
@@ -447,7 +466,10 @@ export function ExamProvider({ children }) {
       try {
         const res = await fetch('/api/exams', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            ...(githubToken ? { 'x-github-token': githubToken } : {})
+          },
           body: JSON.stringify(target)
         });
         const data = await res.json().catch(() => ({}));
@@ -483,7 +505,7 @@ export function ExamProvider({ children }) {
         return false;
       }
     },
-    [examsList, showToast]
+    [examsList, showToast, githubToken]
   );
 
   // Delete an exam module
@@ -499,7 +521,8 @@ export function ExamProvider({ children }) {
         onConfirm: async () => {
           try {
             await fetch(`/api/exams?id=${encodeURIComponent(examId)}`, {
-              method: 'DELETE'
+              method: 'DELETE',
+              headers: githubToken ? { 'x-github-token': githubToken } : {}
             });
           } catch (e) {
             // ignore network errors
@@ -531,7 +554,7 @@ export function ExamProvider({ children }) {
         }
       });
     },
-    [examsList, showToast]
+    [examsList, showToast, githubToken]
   );
 
   // Export an exam's clean questions JSON file
@@ -1378,6 +1401,8 @@ export function ExamProvider({ children }) {
     logoutAdmin,
     adminCredentials,
     updateAdminCredentials,
+    githubToken,
+    updateGithubToken,
     registerUploadedExam,
     syncExamToRepository,
     deleteExamModule,

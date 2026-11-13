@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useExam } from '../../context/ExamContext';
-import { normalizeExamPayload } from '../../utils/examHelpers';
+import { normalizeExamPayload, validateExamQuestions } from '../../utils/examHelpers';
 
 const SAMPLE_JSON_SNIPPET = `[
   {
@@ -45,6 +45,8 @@ export default function AdminPortalView() {
     logoutAdmin,
     adminCredentials,
     updateAdminCredentials,
+    githubToken,
+    updateGithubToken,
     registerUploadedExam,
     syncExamToRepository,
     deleteExamModule,
@@ -72,6 +74,9 @@ export default function AdminPortalView() {
   const [isSaving, setIsSaving] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [showFormatGuide, setShowFormatGuide] = useState(false);
+  const [validation, setValidation] = useState({ errors: [], warnings: [] });
+  const [bulkReport, setBulkReport] = useState([]);
+  const [tokenInput, setTokenInput] = useState('');
 
   // Change Password / Settings State
   const [showCredSettings, setShowCredSettings] = useState(false);
@@ -99,12 +104,15 @@ export default function AdminPortalView() {
     setParsedPreview(null);
     setErrorMsg('');
     setIsSaving(false);
+    setValidation({ errors: [], warnings: [] });
+    setBulkReport([]);
   };
 
   const parseAndPreview = (rawStr, fileNameHint = '') => {
     setErrorMsg('');
     try {
       const parsed = JSON.parse(rawStr);
+      setValidation(validateExamQuestions(parsed));
       let inferredCode = examCode;
       let inferredTitle = examTitle;
 
@@ -146,7 +154,61 @@ export default function AdminPortalView() {
       });
     } catch (err) {
       setParsedPreview(null);
+      setValidation({ errors: [], warnings: [] });
       setErrorMsg(err.message || 'Invalid JSON format.');
+    }
+  };
+
+  const codeFromFileName = (fileName) => {
+    const cleanName = fileName.replace(/\.json$/i, '').replace(/[_\s]+/g, '-').trim();
+    return (cleanName.slice(0, 14) || 'EXAM').toUpperCase();
+  };
+
+  // Bulk upload: several .json files at once; each file name becomes the exam code
+  const processBulkFiles = async (files) => {
+    setIsSaving(true);
+    setErrorMsg('');
+    const report = [];
+    for (const file of files) {
+      const code = codeFromFileName(file.name);
+      try {
+        const text = await file.text();
+        const parsed = JSON.parse(text);
+        const check = validateExamQuestions(parsed);
+        if (check.errors.length > 0) {
+          report.push({ name: file.name, ok: false, msg: check.errors[0] });
+          continue;
+        }
+        await registerUploadedExam(
+          parsed,
+          {
+            id: code.toLowerCase().replace(/[^a-z0-9_-]+/g, '-'),
+            code,
+            title: parsed.title || `${code} Mock Exam`,
+            category: examCategory.trim() || 'ServiceNow Certification',
+            description: parsed.description || ''
+          },
+          { stayOnAdmin: true }
+        );
+        report.push({ name: file.name, ok: true, msg: `Saved as ${code}` });
+      } catch (err) {
+        report.push({ name: file.name, ok: false, msg: err.message || 'Failed to read file' });
+      }
+    }
+    setBulkReport(report);
+    setIsSaving(false);
+    const okCount = report.filter((r) => r.ok).length;
+    showToast(`📦 Bulk upload: ${okCount}/${report.length} exam file(s) saved.`);
+  };
+
+  const handleFiles = (fileList) => {
+    const files = Array.from(fileList || []).filter((f) => /\.json$/i.test(f.name));
+    if (files.length === 0) return;
+    if (files.length > 1) {
+      processBulkFiles(files);
+    } else {
+      setBulkReport([]);
+      processFile(files[0]);
     }
   };
 
@@ -163,15 +225,14 @@ export default function AdminPortalView() {
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files?.[0];
-    if (file) processFile(file);
+    handleFiles(e.target.files);
+    e.target.value = '';
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
     setIsDragging(false);
-    const file = e.dataTransfer.files?.[0];
-    if (file) processFile(file);
+    handleFiles(e.dataTransfer.files);
   };
 
   const handleJsonTextChange = (e) => {
@@ -394,6 +455,46 @@ export default function AdminPortalView() {
               </button>
             </div>
           </form>
+
+          <h3 className="section-title" style={{ margin: '1.25rem 0 0.5rem' }}>
+            ☁️ Cloud Sync Token (GitHub)
+          </h3>
+          <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '0.6rem' }}>
+            On the live site, uploads are committed to your GitHub repo so every device sees them.
+            Paste a Classic token (<code>ghp_…</code>, <code>repo</code> scope). It is stored only
+            in this browser and sent to your own <code>/api/exams</code>. Currently:{' '}
+            <strong>{githubToken ? 'token saved ✓' : 'not set'}</strong>
+          </p>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              updateGithubToken(tokenInput);
+              setTokenInput('');
+            }}
+            style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}
+          >
+            <input
+              type="password"
+              className="form-input"
+              style={{ flex: 1, minWidth: '220px' }}
+              placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
+              value={tokenInput}
+              onChange={(e) => setTokenInput(e.target.value)}
+              autoComplete="off"
+            />
+            <button type="submit" className="btn btn-primary" disabled={!tokenInput.trim()}>
+              Save Token
+            </button>
+            {githubToken && (
+              <button
+                type="button"
+                className="btn btn-outline"
+                onClick={() => updateGithubToken('')}
+              >
+                Clear
+              </button>
+            )}
+          </form>
         </div>
       )}
 
@@ -479,6 +580,7 @@ export default function AdminPortalView() {
                 type="file"
                 ref={fileInputRef}
                 accept=".json,application/json"
+                multiple
                 style={{ display: 'none' }}
                 onChange={handleFileChange}
               />
@@ -491,7 +593,10 @@ export default function AdminPortalView() {
                   </>
                 ) : (
                   <>
-                    <strong>Click to choose a .json file</strong> or drag & drop it here
+                    <strong>Click to choose .json file(s)</strong> or drag & drop here<br />
+                    <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+                      Select several files at once for a bulk upload (file name = exam code)
+                    </span>
                   </>
                 )}
               </div>
@@ -528,6 +633,43 @@ export default function AdminPortalView() {
             )}
 
             {errorMsg && <div className="upload-error-box">⚠️ {errorMsg}</div>}
+
+            {validation.errors.length > 0 && (
+              <div className="upload-error-box">
+                <strong>🚫 {validation.errors.length} problem(s) to fix before saving:</strong>
+                <ul style={{ margin: '0.35rem 0 0 1.1rem' }}>
+                  {validation.errors.map((m, i) => (
+                    <li key={i}>{m}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {validation.warnings.length > 0 && (
+              <details className="upload-warning-box">
+                <summary>
+                  ⚠️ {validation.warnings.length} suggestion(s) (you can still save)
+                </summary>
+                <ul style={{ margin: '0.35rem 0 0 1.1rem' }}>
+                  {validation.warnings.map((m, i) => (
+                    <li key={i}>{m}</li>
+                  ))}
+                </ul>
+              </details>
+            )}
+
+            {bulkReport.length > 0 && (
+              <div className="upload-preview-banner">
+                <strong>📦 Bulk upload results</strong>
+                <ul style={{ margin: '0.35rem 0 0 1.1rem' }}>
+                  {bulkReport.map((r, i) => (
+                    <li key={i} style={{ color: r.ok ? 'var(--sn-green-dark)' : 'var(--danger)' }}>
+                      {r.ok ? '✓' : '✗'} {r.name} — {r.msg}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             <div className="form-group">
               <div
@@ -596,7 +738,7 @@ export default function AdminPortalView() {
               <button
                 type="submit"
                 className="btn btn-primary"
-                disabled={!parsedPreview || isSaving}
+                disabled={!parsedPreview || isSaving || validation.errors.length > 0}
               >
                 {isSaving
                   ? 'Saving to Folder...'
