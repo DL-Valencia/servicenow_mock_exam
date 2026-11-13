@@ -7,7 +7,8 @@ export default function QuestionBankView() {
     activeExam,
     savedExamsList,
     selectExam,
-    navigateToView,
+    goHomeCatalog,
+    exportStudyNotes,
     questions,
     state,
     allTopics,
@@ -26,8 +27,10 @@ export default function QuestionBankView() {
       if (topic !== 'all' && !(q.tags || []).includes(topic)) return false;
 
       const qId = q.id;
+      const noteText = String(state.notes?.[qId] || '').trim();
       if (status === 'starred' && !state.starred[qId]) return false;
       if (status === 'mistakes' && state.history[qId]?.lastResult !== false) return false;
+      if (status === 'notes' && !noteText) return false;
       if (status === 'answered' && !state.history[qId]) return false;
       if (status === 'unanswered' && state.history[qId]) return false;
 
@@ -36,12 +39,13 @@ export default function QuestionBankView() {
         const inQ = q.question.toLowerCase().includes(query);
         const inOpts = q.options.some((o) => o.text.toLowerCase().includes(query));
         const inExp = (q.explanation || '').toLowerCase().includes(query);
-        if (!inId && !inQ && !inOpts && !inExp) return false;
+        const inNote = noteText.toLowerCase().includes(query);
+        if (!inId && !inQ && !inOpts && !inExp && !inNote) return false;
       }
 
       return true;
     });
-  }, [questions, state.starred, state.history, bankFilters]);
+  }, [questions, state.starred, state.history, state.notes, bankFilters]);
 
   const displayedQuestions = filteredQuestions.slice(0, 100);
   const code = activeExam?.code || 'Exam';
@@ -57,7 +61,7 @@ export default function QuestionBankView() {
               <button
                 className="btn btn-primary"
                 style={{ marginTop: '1rem' }}
-                onClick={() => navigateToView('catalog')}
+                onClick={goHomeCatalog}
               >
                 🔍 Search & Save Exam Modules
               </button>
@@ -113,20 +117,32 @@ export default function QuestionBankView() {
             </p>
           </div>
 
-          {savedExamsList.length > 1 && (
-            <select
-              className="filter-select"
-              value={activeExam.id}
-              onChange={(e) => selectExam(e.target.value, 'bank')}
-              title="Switch Exam Bank"
-            >
-              {savedExamsList.map((ex) => (
-                <option key={ex.id} value={ex.id}>
-                  Switch Exam: {ex.code} ({ex.questions.length} Qs)
-                </option>
-              ))}
-            </select>
-          )}
+          <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center', flexWrap: 'wrap' }}>
+            {dashboardStats.notesCount > 0 && (
+              <button
+                type="button"
+                className="btn btn-outline btn-sm"
+                onClick={exportStudyNotes}
+                title="Export all personal study notes for this exam as a Markdown study sheet"
+              >
+                📝 Export Notes ({dashboardStats.notesCount})
+              </button>
+            )}
+            {savedExamsList.length > 1 && (
+              <select
+                className="filter-select"
+                value={activeExam.id}
+                onChange={(e) => selectExam(e.target.value, 'bank')}
+                title="Switch Exam Bank"
+              >
+                {savedExamsList.map((ex) => (
+                  <option key={ex.id} value={ex.id}>
+                    Switch Exam: {ex.code} ({ex.questions.length} Qs)
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
         </div>
 
         <div className="search-bar-row">
@@ -180,10 +196,13 @@ export default function QuestionBankView() {
             }
           >
             <option value="all">All Status</option>
-            <option value="starred">Starred Only</option>
-            <option value="mistakes">Mistakes Bank Only</option>
-            <option value="answered">Answered</option>
-            <option value="unanswered">Unanswered</option>
+            <option value="starred">Starred Only ({dashboardStats.starredCount || 0})</option>
+            <option value="mistakes">Mistakes Bank Only ({dashboardStats.missedCount || 0})</option>
+            <option value="notes">With Study Notes ({dashboardStats.notesCount || 0})</option>
+            <option value="answered">Answered ({dashboardStats.totalAnswered || 0})</option>
+            <option value="unanswered">
+              Unanswered ({Math.max(0, questions.length - (dashboardStats.totalAnswered || 0))})
+            </option>
           </select>
         </div>
 

@@ -2,6 +2,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { useExam } from '../../context/ExamContext';
 import { isQuestionAnswerCorrect } from '../../utils/examHelpers';
 import StudyNotesBox from './StudyNotesBox';
+import ExplanationContent from '../common/ExplanationContent';
 
 export default function QuestionCard() {
   const {
@@ -161,11 +162,18 @@ export default function QuestionCard() {
           )}
         </div>
 
-        <div className="q-type-badge">
+        <div
+          className="q-type-badge"
+          style={
+            isMulti && userSelected.length === correctCount
+              ? { borderColor: 'var(--sn-green)', color: 'var(--sn-green-dark)' }
+              : undefined
+          }
+        >
           {isMatching
             ? `🔗 Drag & Drop Matching (${q.matchingPairs.length} Pairs)`
             : isMulti
-            ? `Multiple Choice (Choose ${correctCount})`
+            ? `Multiple Choice (Choose ${correctCount} · ${userSelected.length}/${correctCount} Selected)`
             : 'Single Choice (Choose 1)'}
         </div>
       </div>
@@ -365,9 +373,10 @@ export default function QuestionCard() {
           <div className="feedback-explanation">
             {!isMatching && <strong>Correct Answer(s): Option {correctLabels}</strong>}
             <div style={{ marginTop: isMatching ? 0 : '0.4rem' }}>
-              {q.explanation
-                ? q.explanation
-                : `Refer to official ${examCode} guidelines and documentation for detailed concepts.`}
+              <ExplanationContent
+                text={q.explanation}
+                fallbackText={`Refer to official ${examCode} guidelines and documentation for detailed concepts.`}
+              />
             </div>
           </div>
         </div>

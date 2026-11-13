@@ -1989,6 +1989,69 @@ svg {
   line-height: 1.5;
 }
 
+.explanation-rich-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.explanation-paragraph {
+  margin: 0;
+  line-height: 1.55;
+}
+
+.explanation-inline-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.82em;
+  padding: 0.12rem 0.38rem;
+  border-radius: 4px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--primary);
+}
+
+.explanation-learn-more {
+  margin-top: 0.25rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--border-color);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-size: 0.83rem;
+}
+
+.explanation-learn-more-label {
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+.explanation-learn-more-links {
+  display: inline;
+  line-height: 1.6;
+}
+
+.explanation-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: opacity 0.15s ease;
+}
+
+.explanation-link:hover {
+  opacity: 0.82;
+}
+
+.explanation-link-arrow {
+  font-size: 0.75em;
+  line-height: 1;
+}
+
 /* UPLOAD MODAL */
 .upload-modal-box {
   max-width: 680px;

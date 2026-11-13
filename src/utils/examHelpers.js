@@ -228,6 +228,10 @@ export function computeExamStats(questions = [], progress = {}) {
   const starredCount = Object.keys(starred).filter(
     (k) => starred[k] && questionIdSet.has(String(k))
   ).length;
+  const notes = progress?.notes || {};
+  const notesCount = Object.keys(notes).filter(
+    (k) => String(notes[k] || '').trim().length > 0 && questionIdSet.has(String(k))
+  ).length;
 
   const topicCounts = {};
   const domainProgress = {};
@@ -263,6 +267,7 @@ export function computeExamStats(questions = [], progress = {}) {
     missedCount,
     accuracy,
     starredCount,
+    notesCount,
     coveragePct,
     topicCounts,
     domainProgress,
@@ -340,7 +345,7 @@ export function prepareSessionQuestions(
 export const origLabel = (opt) => opt.originalLabel || opt.label;
 
 /** Converts a live session into a storable snapshot keyed by question id + original option labels. */
-export function serializeSession(session, idx = 0) {
+export function serializeSession(session, idx = 0, remainingSeconds = 0) {
   const order = [];
   const choices = {};
   const answers = {};
@@ -370,6 +375,13 @@ export function serializeSession(session, idx = 0) {
     checked,
     flagged,
     idx,
+    mode: session.mode || 'study',
+    title: session.title || '',
+    duration: session.duration || 0,
+    remainingSeconds:
+      session.mode === 'exam' && remainingSeconds > 0
+        ? remainingSeconds
+        : session.duration || 0,
     shuffled: !!session.shuffled,
     updatedAt: Date.now()
   };

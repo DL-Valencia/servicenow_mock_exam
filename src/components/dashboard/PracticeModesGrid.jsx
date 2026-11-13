@@ -5,6 +5,7 @@ export default function PracticeModesGrid() {
   const {
     activeExam,
     questions,
+    state,
     dashboardStats,
     marathonShuffle,
     setMarathonShuffle,
@@ -19,6 +20,15 @@ export default function PracticeModesGrid() {
   const timedCount = Math.min(60, totalQs);
   const quickCount = Math.min(20, totalQs);
   const coveragePct = totalQs > 0 ? Math.round((dashboardStats.totalAnswered / totalQs) * 100) : 0;
+
+  const savedTimedExam = state?.savedSessions?.timed_exam;
+  const savedTimedAnswered = savedTimedExam?.answers
+    ? Object.keys(savedTimedExam.answers).length
+    : 0;
+  const savedTimedTotal = savedTimedExam?.order?.length || timedCount;
+  const savedTimedMins = savedTimedExam?.remainingSeconds
+    ? Math.max(1, Math.ceil(savedTimedExam.remainingSeconds / 60))
+    : 90;
 
   return (
     <section className="dashboard-section-block">
@@ -45,17 +55,71 @@ export default function PracticeModesGrid() {
           }
         >
           <div className="mode-card-body">
-            <span className="mode-badge primary">⏱️ Exam Simulation</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', flexWrap: 'wrap', marginBottom: '0.5rem' }}>
+              <span className="mode-badge primary" style={{ marginBottom: 0 }}>
+                ⏱️ Exam Simulation
+              </span>
+              {savedTimedExam && (
+                <span className="mode-badge warning" style={{ marginBottom: 0 }}>
+                  ▶️ In Progress ({savedTimedAnswered}/{savedTimedTotal} · {savedTimedMins}m left)
+                </span>
+              )}
+            </div>
             <h3>Timed {timedCount}-Q Exam</h3>
             <p>
               {timedCount} questions randomized from all {totalQs} {code} questions, 90 minutes
-              strict countdown timer, 70% passing grade threshold. Mimics the real certification
-              exam experience.
+              strict countdown timer, 70% passing grade threshold. Auto-saves across page reloads.
             </p>
           </div>
           <div className="mode-footer">
             <span>{timedCount} Questions · 90 Mins</span>
-            <span className="btn btn-primary btn-sm">Launch</span>
+            <div style={{ display: 'flex', gap: '0.4rem' }} onClick={(e) => e.stopPropagation()}>
+              {savedTimedExam ? (
+                <>
+                  <button
+                    type="button"
+                    className="btn btn-outline btn-sm"
+                    onClick={() =>
+                      startExam(
+                        timedCount,
+                        `Timed ${code} Exam Simulator (${timedCount} Qs)`,
+                        90,
+                        null,
+                        true
+                      )
+                    }
+                    title="Discard saved attempt and start a brand-new timed exam"
+                  >
+                    New
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-sm"
+                    onClick={() =>
+                      startExam(
+                        timedCount,
+                        `Timed ${code} Exam Simulator (${timedCount} Qs)`,
+                        90,
+                        null,
+                        false
+                      )
+                    }
+                  >
+                    Resume →
+                  </button>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  className="btn btn-primary btn-sm"
+                  onClick={() =>
+                    startExam(timedCount, `Timed ${code} Exam Simulator (${timedCount} Qs)`, 90)
+                  }
+                >
+                  Launch
+                </button>
+              )}
+            </div>
           </div>
         </div>
 

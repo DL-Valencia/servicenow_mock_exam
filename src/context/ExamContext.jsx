@@ -682,11 +682,18 @@ export function ExamProvider({ children }) {
     };
 
     updateActiveExamProgress(
-      (prevProg) => ({
-        ...prevProg,
-        history: updatedHistory,
-        examHistory: [...(prevProg.examHistory || []), newAttempt]
-      }),
+      (prevProg) => {
+        const nextSavedSessions = { ...(prevProg.savedSessions || {}) };
+        if (currentSession.mode === 'exam' || currentSession.sessionKey === 'timed_exam') {
+          delete nextSavedSessions.timed_exam;
+        }
+        return {
+          ...prevProg,
+          history: updatedHistory,
+          savedSessions: nextSavedSessions,
+          examHistory: [...(prevProg.examHistory || []), newAttempt]
+        };
+      },
       targetExamId
     );
 
@@ -720,7 +727,7 @@ export function ExamProvider({ children }) {
         setTimeRemaining((prev) => {
           if (prev <= 1) {
             clearInterval(timerRef.current);
-            alert('Time is up! Submitting your exam now.');
+            showToast('⏰ Time is up! Submitting your exam for scoring.');
             finishExam();
             return 0;
           }
@@ -731,7 +738,7 @@ export function ExamProvider({ children }) {
     } else {
       if (timerRef.current) clearInterval(timerRef.current);
     }
-  }, [activeView, currentSession?.mode, finishExam]);
+  }, [activeView, currentSession?.mode, finishExam, showToast]);
 
   // Session Initializer
   const initSession = useCallback(
@@ -767,11 +774,17 @@ export function ExamProvider({ children }) {
       const restored = saved ? restoreSession(saved, targetExam ? targetExam.questions : questionList) : null;
 
       if (restored && restored.questions.length > 0) {
+        const restoredDuration = saved.duration || durationSeconds;
+        const restoredRemaining =
+          mode === 'exam' && saved.remainingSeconds > 0
+            ? saved.remainingSeconds
+            : restoredDuration;
+
         setCurrentSession({
           examId: targetExamId,
           examCode: targetExam?.code || 'EXAM',
           mode,
-          title,
+          title: saved.title || title,
           baseQuestions: questionList,
           questions: restored.questions,
           shuffled: !!saved.shuffled,
@@ -780,14 +793,18 @@ export function ExamProvider({ children }) {
           userAnswers: restored.userAnswers,
           checked: restored.checked,
           startTime: Date.now(),
-          duration: durationSeconds,
+          duration: restoredDuration,
           flagged: restored.flagged
         });
         setCurrentQIndex(Math.min(saved.idx || 0, restored.questions.length - 1));
         setPaletteFilter('all');
-        setTimeRemaining(durationSeconds);
+        setTimeRemaining(restoredRemaining);
         showView('session');
-        showToast('▶️ Resumed your saved progress');
+        showToast(
+          mode === 'exam'
+            ? '⏱️ Resumed your in-progress Timed Exam'
+            : '▶️ Resumed your saved progress'
+        );
         return;
       }
 
@@ -837,10 +854,10 @@ export function ExamProvider({ children }) {
     showToast('🔀 Shuffled! Your answered questions are kept.');
   }, [currentSession, questions, showToast]);
 
-  // Auto-save study sessions that belong to a module so they can be resumed
+  // Auto-save study and timed exam sessions that belong to a module so they can be resumed across reloads
   useEffect(() => {
-    if (!currentSession?.sessionKey || currentSession.mode !== 'study' || !currentSession.examId) return;
-    const snap = serializeSession(currentSession, currentQIndex);
+    if (!currentSession?.sessionKey || !currentSession.examId) return;
+    const snap = serializeSession(currentSession, currentQIndex, timeRemaining);
     updateActiveExamProgress(
       (prevProg) => ({
         ...prevProg,
@@ -851,7 +868,7 @@ export function ExamProvider({ children }) {
       }),
       currentSession.examId
     );
-  }, [currentSession, currentQIndex, updateActiveExamProgress]);
+  }, [currentSession, currentQIndex, timeRemaining, updateActiveExamProgress]);
 
   // Start Mode Helpers (Scoped to activeExam or passed exam)
   const startStudy = useCallback(
@@ -954,7 +971,7 @@ export function ExamProvider({ children }) {
   );
 
   const startExam = useCallback(
-    (count = 60, title = null, durationMinutes = 90, customExam = null) => {
+    (count = 60, title = null, durationMinutes = 90, customExam = null, fresh = false) => {
       const targetExam = customExam || activeExam;
       if (!targetExam) return;
       if (customExam && customExam.id !== activeExam?.id) {
@@ -965,7 +982,9 @@ export function ExamProvider({ children }) {
       const examTitle = title || `Timed ${targetExam.code} Exam Simulator (${actualCount} Qs)`;
       initSession(pool, 'exam', examTitle, durationMinutes * 60, {
         exam: targetExam,
-        shuffleChoices: true
+        shuffleChoices: true,
+        sessionKey: 'timed_exam',
+        fresh
       });
     },
     [activeExam, initSession]
@@ -973,7 +992,7 @@ export function ExamProvider({ children }) {
 
   const retakeCurrentExam = useCallback(() => {
     if (!lastExamConfig) {
-      startExam(60, null, 90);
+      startExam(60, null, 90, null, true);
       return;
     }
     initSession(
@@ -981,7 +1000,7 @@ export function ExamProvider({ children }) {
       lastExamConfig.mode,
       lastExamConfig.title,
       lastExamConfig.duration,
-      lastExamConfig.options
+      { ...(lastExamConfig.options || {}), fresh: true }
     );
   }, [lastExamConfig, startExam, initSession]);
 
@@ -1000,6 +1019,12 @@ export function ExamProvider({ children }) {
         if (currentSelected.includes(letter)) {
           nextSelected = currentSelected.filter((l) => l !== letter);
         } else {
+          if (correctCount > 1 && currentSelected.length >= correctCount) {
+            showToast(
+              `ℹ️ Choose ${correctCount} options for this question. Deselect an option first to change your choice.`
+            );
+            return;
+          }
           nextSelected = [...currentSelected, letter];
         }
       } else {
@@ -1014,7 +1039,7 @@ export function ExamProvider({ children }) {
         }
       }));
     },
-    [currentSession, currentQIndex]
+    [currentSession, currentQIndex, showToast]
   );
 
   const handleMatchingSelect = useCallback(
@@ -1095,6 +1120,14 @@ export function ExamProvider({ children }) {
     } else if (userSelected.length === 0) {
       showToast('Please select an option before checking.');
       return;
+    } else {
+      const requiredCount = q.options.filter((o) => o.isCorrect).length;
+      if ((q.isMultiple || requiredCount > 1) && userSelected.length < requiredCount) {
+        showToast(
+          `Please select ${requiredCount} options before checking (${userSelected.length}/${requiredCount} selected).`
+        );
+        return;
+      }
     }
 
     const isCorrect = isQuestionAnswerCorrect(q, userSelected);
@@ -1312,6 +1345,56 @@ export function ExamProvider({ children }) {
     );
   }, [currentSession, initSession, openModal, updateActiveExamProgress]);
 
+  // Export personal study notes for the active exam as a Markdown study sheet
+  const exportStudyNotes = useCallback(() => {
+    if (!activeExam) return;
+    const notesMap = activeExamProgress.notes || {};
+    const notedQuestions = activeExam.questions.filter(
+      (q) => String(notesMap[q.id] || '').trim().length > 0
+    );
+    if (notedQuestions.length === 0) {
+      showToast(`📝 No study notes saved for ${activeExam.code} yet.`);
+      return;
+    }
+
+    const lines = [
+      `# ${activeExam.code} — ${activeExam.title} Study Notes`,
+      `Generated: ${new Date().toLocaleDateString()} · ${notedQuestions.length} Question Note(s)`,
+      '',
+      '---',
+      ''
+    ];
+
+    notedQuestions.forEach((q) => {
+      const correctOpts = q.options
+        .filter((o) => o.isCorrect)
+        .map((o) => `[${o.label}] ${o.text}`)
+        .join(' | ');
+      lines.push(`### Q#${q.id}: ${q.question}`);
+      lines.push(`- **Domain(s):** ${(q.tags || ['General']).join(', ')}`);
+      lines.push(`- **Correct Answer:** ${correctOpts}`);
+      lines.push(`- **My Study Note:** ${String(notesMap[q.id]).trim()}`);
+      if (q.explanation) {
+        lines.push(`- **Explanation:** ${q.explanation}`);
+      }
+      lines.push('');
+    });
+
+    const mdContent = lines.join('\n');
+    const dataStr =
+      'data:text/markdown;charset=utf-8,' + encodeURIComponent(mdContent);
+    const a = document.createElement('a');
+    a.setAttribute('href', dataStr);
+    a.setAttribute(
+      'download',
+      `${activeExam.code.toLowerCase()}_study_notes_${new Date().toISOString().slice(0, 10)}.md`
+    );
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    showToast(`📝 Exported ${notedQuestions.length} study note(s) as Markdown!`);
+  }, [activeExam, activeExamProgress.notes, showToast]);
+
   // Export & Import Full Hub Backup Data
   const exportData = useCallback(() => {
     const dataStr =
@@ -1461,6 +1544,7 @@ export function ExamProvider({ children }) {
     sidebarOpen,
     setSidebarOpen,
     exportData,
+    exportStudyNotes,
     importDataFromFile,
     bankFilters,
     setBankFilters,

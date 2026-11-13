@@ -90,6 +90,56 @@ export default function ExamCatalogHome() {
             )}
           </div>
 
+          {/* QUICK BROWSE AVAILABLE EXAMS BAR */}
+          {examsList.length > 0 && (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.45rem',
+                flexWrap: 'wrap',
+                marginTop: '0.65rem'
+              }}
+            >
+              <span
+                style={{
+                  fontSize: '0.76rem',
+                  fontWeight: 700,
+                  color: 'var(--text-muted)',
+                  marginRight: '0.15rem'
+                }}
+              >
+                Available Modules ({examsList.length}):
+              </span>
+              {examsList.map((ex) => {
+                const isSaved = savedExamIds.includes(ex.id);
+                return (
+                  <button
+                    key={ex.id}
+                    type="button"
+                    className={`mode-pill-btn ${isSaved ? 'primary' : ''}`}
+                    style={{ fontSize: '0.75rem', padding: '0.28rem 0.65rem' }}
+                    onClick={() => {
+                      if (isSaved) {
+                        selectExam(ex.id, 'dashboard', true);
+                      } else {
+                        saveExamToDashboard(ex.id);
+                      }
+                    }}
+                    title={
+                      isSaved
+                        ? `Open ${ex.title} (${ex.questions.length} Qs)`
+                        : `Click to add ${ex.title} (${ex.questions.length} Qs) to My Saved Exam Modules`
+                    }
+                  >
+                    {isSaved ? '✓ ' : '+ '}
+                    {ex.code} ({ex.questions.length})
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
           {/* LIVE SEARCH RESULTS PANEL */}
           {isSearching && (
             <div className="search-results-panel">
@@ -251,11 +301,31 @@ export default function ExamCatalogHome() {
           <div className="catalog-empty-state">
             <div style={{ fontSize: '2.5rem', marginBottom: '0.6rem' }}>📌</div>
             <h3>No Exam Modules Saved to Your Dashboard Yet</h3>
-            <p style={{ maxWidth: '540px', margin: '0 auto' }}>
-              Exam modules stay hidden until you search for them and save them. Use the search bar
-              above to find an exam (for example, <strong>CIS-DF</strong>, <strong>CAD</strong>, or{' '}
-              <strong>CSA</strong>) and click <strong>📌 Save to My Exams</strong>.
+            <p style={{ maxWidth: '540px', margin: '0 auto 1rem' }}>
+              Use the search bar above or click any available certification module below to pin it
+              to your personal study dashboard:
             </p>
+            {examsList.length > 0 && (
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '0.6rem',
+                  justifyContent: 'center',
+                  flexWrap: 'wrap'
+                }}
+              >
+                {examsList.map((ex) => (
+                  <button
+                    key={ex.id}
+                    type="button"
+                    className="btn btn-secondary btn-sm"
+                    onClick={() => saveExamToDashboard(ex.id)}
+                  >
+                    📌 Add {ex.code} ({ex.questions.length} Qs)
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         ) : (
           <div className="exam-catalog-grid">

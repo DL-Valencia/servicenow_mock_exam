@@ -166,5 +166,20 @@ export default defineConfig({
   server: {
     port: 5173,
     open: false
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+          const examMatch = id.match(/src[\\/]data[\\/]exams[\\/]([^\\/]+)\.json$/);
+          if (examMatch) {
+            return `exam-${examMatch[1]}`;
+          }
+        }
+      }
+    }
   }
 });

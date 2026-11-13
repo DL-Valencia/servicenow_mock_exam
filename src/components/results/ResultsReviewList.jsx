@@ -1,6 +1,7 @@
 import React from 'react';
 import { useExam } from '../../context/ExamContext';
 import { isQuestionAnswerCorrect } from '../../utils/examHelpers';
+import ExplanationContent from '../common/ExplanationContent';
 
 export default function ResultsReviewList() {
   const { currentSession, resultsReviewFilter } = useExam();
@@ -106,7 +107,8 @@ export default function ResultsReviewList() {
 
             {q.explanation && (
               <div className="bank-explanation-box">
-                <strong>💡 Explanation:</strong> {q.explanation}
+                <div style={{ fontWeight: 700, marginBottom: '0.25rem' }}>💡 Explanation:</div>
+                <ExplanationContent text={q.explanation} />
               </div>
             )}
           </div>
